@@ -1,0 +1,86 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Aseguradoras</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione Selecione el boton de "Agregar" para añadir un usuario, el boton de amarillo para actualizarlo, y el boton rojo para eliminar el usuario</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="text-right">@Html.ActionLink("+", "Form", "Aseguradora", htmlAttributes: new { @class = "btn btn-success" })</p>
+        </div>
+    </div>
+    <br/>
+
+    @if(Model.Aseguradoras.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Editar</td>
+                            <td class = "form-group" style = "display: none;">IdAseguradora</td>
+                            <td>Nombre</td>
+                            <td>Fecha de Creacion</td>
+                            <td>Fecha de Modificacion</td>
+                            <td>Usuario</td>
+                            <td>Imagen</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(ML.Aseguradora aseguradora in Model.Aseguradoras)
+                        {
+                            <tr class="text-center">
+                                <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora })"></a></td>
+                                <td class = "form-group" style = "display: none;">@aseguradora.IdAseguradora</td>                                
+                                <td>@aseguradora.Nombre</td>
+                                <td>@aseguradora.FechaCreacion</td>
+                                <td>@aseguradora.FechaModificacion</td>
+                                <td class = "form-group" style = "display: none;">@aseguradora.Usuario.IdUsuario</td>
+                                <td>@aseguradora.Usuario.Nombre</td>
+                                
+
+                                @if (aseguradora.Imagen != null)
+                                {
+                                    <td><img src="data:image/jpeg;base64,@Convert.ToBase64String(aseguradora.Imagen)" style=" height:100px; width: 100px;" /></td>
+                                }
+                                else
+                                {
+                                    <td><img src="~/img/NoImage.jpg" style=" height:80px; width:100px;" /></td>
+                                }
+
+
+                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de aseguradora!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+

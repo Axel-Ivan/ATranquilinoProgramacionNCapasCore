@@ -1,0 +1,147 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Añadir Aseguradora</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="text-left">Llene los campos con la información de la aseguradora que desea registrar de acuerdo a lo que se indica.</h5>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Aseguradora", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-md-12" >
+                        <div class = "form-group" style = "display: none;">                      
+                        @Html.LabelFor(model => model.IdAseguradora, new { @class = "hidden" })
+                        @Html.TextBoxFor(model => model.IdAseguradora, new { @class = "hidden from-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.IdAseguradora)
+                    </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Nombre)
+                        @*<div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
+                            @*</div>*@
+                            @Html.ValidationMessageFor(model => model.Nombre)
+                            <label id="lblErrorNombre"></label>
+                        </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class = "form-group" style = "display: none;"> 
+                        @Html.LabelFor(model => model.FechaCreacion, new { @class = "hidden" })
+                        @Html.TextBoxFor(model => model.FechaCreacion, new { @class = "hidden from-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.FechaCreacion)
+                    </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class = "form-group" style = "display: none;"> 
+                        @Html.LabelFor(model => model.FechaModificacion, new { @class = "hidden"})
+                        @Html.TextBoxFor(model => model.FechaModificacion, new { @class = "hidden from-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.FechaModificacion)
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Usuario)
+                        @Html.DropDownListFor(model => model.Usuario.IdUsuario, new SelectList(Model.Usuario.Usuarios, "IdUsuario", "Nombre"), "Selecciona el usuario", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Usuario)
+                    </div>
+                </div>
+                <br />
+                
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Imagen)
+                        
+                        <input type="file" name="fuImagen" onchange="readURL(this);" />
+                        @if (Model.Imagen != null)
+                        {
+                            <img id="ImagenPreview" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Imagen)" width="100" height="100" />
+                        }
+                        else
+                        {
+                            <img id="ImagenPreview" src="~/img/NoImage.jpg" style="height:80px; width:100px;" />
+                        }
+                        @Html.ValidationMessageFor(model => model.Imagen)
+                    </div>
+                </div>
+                <br/>
+                
+                <div class="row">
+                    <div class="col-md-1">
+                        <input type="submit" value="Guardar" class="btn btn-success">
+                    </div>
+                    <div class="col-md-1">
+                        @Html.ActionLink("Regresar", "GetAll", "Aseguradora", htmlAttributes: new { @class = "btn btn-danger" } )
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#ImagenPreview').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    function SoloLetras(e, controlId){
+        //var letra = e.onkeypress.arguments[0].key;
+        var caracter = e.key;
+        var txtNombre = $("#txtNombre");
+        if(!/[^a-zA-Z/\s/]/.test(caracter))
+        {
+            txtNombre.css('border-color', 'green');
+            $('#' + controlId).text("");
+            return true;
+        }
+        else
+        {
+            $('#' + controlId).text("Solo se aceptan letras!!!");
+            txtNombre.css('border-color', 'red');
+            //alert('Solo se aceptan letras!!!');
+            return false;
+        }
+    }
+
+</script>
+
