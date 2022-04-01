@@ -22,23 +22,15 @@
         @using(Html.BeginForm("GetAll", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div class="row">
-            <div class="col-xl-4">
-                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @placeholder = "Nombre", @onkeypress = "return SoloLetras(this, 'lblNombre')", @autocomplete = "off" })
+            <div class = "col-md-4">
+                @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona una Empresa", new { @class = "form-control" })
             </div>
-            <div class="col-xl-4">
-                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoPaterno')", @placeholder = "Apellido Paterno", @autocomplete = "off" })
-            </div>
-            <div class="col-xl-4">
-                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoMaterno')",  @placeholder = "Apellido Materno", @autocomplete = "off" })
+            <div class="col-md-4"> 
+                <input type="submit" value="Buscar" class="btn btn-primary" formmethod="post"> @* La clase float-end mueve a la derecha el elemento *@
             </div>
         </div> 
         <br />
-        <div class="row justify-content-end"> @* Justificar todo a la derecha (al final) *@
-            <div class="col-xl-4"> 
-                <input type="submit" value="Buscar" class="btn btn-primary float-end" formmethod="post"> @* La clase float-end mueve a la derecha el elemento *@
-            </div>
-        </div>
-        <br />
+
         }
     </div>
 
@@ -57,6 +49,7 @@
                     <thead>
                         <tr class="text-center">
                             <td>Editar</td>
+                            <td>Asignar</td>
                             <td class = "form-group" style = "display: none;">IdEmpleado</td>
                             <td>Nombre Completo</td>
                             <td>RFC</td>
@@ -77,6 +70,7 @@
                     {
                         <tr class="text-center">
                             <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Empleado", new { IdEmpleado = empleado.IdEmpleado })"></a></td>
+                            <td><a class="btn btn-primary glyphicon glyphicon-edit" href="@Url.Action("GetAll", "Dependiente", new { IdEmpleado = empleado.IdEmpleado })"></a></td>
                             <td class = "form-group" style = "display: none;">@empleado.IdEmpleado</td>
                             <td>@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno</td>
                             <td>@empleado.RFC</td>

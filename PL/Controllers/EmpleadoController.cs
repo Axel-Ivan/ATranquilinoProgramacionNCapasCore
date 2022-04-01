@@ -9,17 +9,16 @@ namespace PL.Controllers
         {
             ML.Empleado empleado = new ML.Empleado();
 
-            empleado.Nombre = (empleado.Nombre == null) ? "" : empleado.Nombre; //Operador ternario
-            empleado.ApellidoPaterno = (empleado.ApellidoPaterno == null) ? "" : empleado.ApellidoPaterno;
-            empleado.ApellidoMaterno = (empleado.ApellidoMaterno == null) ? "" : empleado.ApellidoMaterno;
+            ML.Result resultEmpresas = BL.Empresa.GetAll();
+            ML.Result resultEmpleados = BL.Empleado.GetAll(empleado);
+            empleado.Empresa = new ML.Empresa();
+            //empleado = new ML.Empleado();
 
-            ML.Result result = BL.Empleado.GetAll(empleado);
-            empleado = new ML.Empleado();
-
-            if (result.Correct)
+            if (resultEmpleados.Correct)
             {
                 empleado.Empleados = new List<object>();
-                empleado.Empleados = result.Objects;
+                empleado.Empresa.Empresas = resultEmpresas.Objects;
+                empleado.Empleados = resultEmpleados.Objects;               
             }
             return View(empleado);
         }
@@ -27,17 +26,16 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult GetAll(ML.Empleado empleado)
         {
-            empleado.Nombre = (empleado.Nombre == null) ? "" : empleado.Nombre; //Operador ternario
-            empleado.ApellidoPaterno = (empleado.ApellidoPaterno == null) ? "" : empleado.ApellidoPaterno;
-            empleado.ApellidoMaterno = (empleado.ApellidoMaterno == null) ? "" : empleado.ApellidoMaterno;
+            //ML.Empleado empleado = new ML.Empleado();
+            ML.Result resultEmpresas = BL.Empresa.GetAll();
+            ML.Result resultEmpleados = BL.Empleado.GetByIdEmpresa(empleado.Empresa.IdEmpresa);
+            empleado.Empresa = new ML.Empresa();
 
-            ML.Result result = BL.Empleado.GetAll(empleado);
-            empleado = new ML.Empleado();
-
-            if (result.Correct)
+            if (resultEmpleados.Correct)
             {
                 empleado.Empleados = new List<object>();
-                empleado.Empleados = result.Objects;
+                empleado.Empresa.Empresas = resultEmpresas.Objects;
+                empleado.Empleados = resultEmpleados.Objects;
             }
             return View(empleado);
         }
