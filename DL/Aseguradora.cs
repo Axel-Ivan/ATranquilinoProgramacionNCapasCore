@@ -15,6 +15,5 @@ namespace DL
         public virtual Usuario? IdUsuarioNavigation { get; set; }
 
         public string UsuarioNombre { get; set; } = null;
-
     }
 }

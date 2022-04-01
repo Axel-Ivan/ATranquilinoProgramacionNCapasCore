@@ -108,7 +108,7 @@ namespace BL
                     {
                         ML.Direccion direccion = new ML.Direccion();
                         direccion.Usuario = new ML.Usuario();
-                        direccion.Usuario.IdUsuario = procedure.IdUsuario.Value;
+                        direccion.Usuario.IdUsuario = procedure.IdUsuario;
                         direccion.Usuario.UserName = procedure.UserName;
                         direccion.Usuario.Contrasenia = procedure.Contrasenia;
                         direccion.Usuario.Nombre = procedure.Nombre; //AS

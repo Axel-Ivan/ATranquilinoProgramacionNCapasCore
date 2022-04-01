@@ -101,8 +101,6 @@ namespace PL.Controllers
 
                 return View(aseguradora);
             }
-
-            return PartialView("ValidationModal");
         }
 
         [HttpGet]

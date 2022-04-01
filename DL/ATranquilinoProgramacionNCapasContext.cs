@@ -18,6 +18,8 @@ namespace DL
 
         public virtual DbSet<Aseguradora> Aseguradoras { get; set; } = null!;
         public virtual DbSet<Colonium> Colonia { get; set; } = null!;
+        public virtual DbSet<Dependiente> Dependientes { get; set; } = null!;
+        public virtual DbSet<DependienteTipo> DependienteTipos { get; set; } = null!;
         public virtual DbSet<Direccion> Direccions { get; set; } = null!;
         public virtual DbSet<Empleado> Empleados { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
@@ -85,6 +87,71 @@ namespace DL
                     .HasForeignKey(d => d.IdMunicipio)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Colonia__IdMunic__5FB337D6");
+            });
+
+            modelBuilder.Entity<Dependiente>(entity =>
+            {
+                entity.HasKey(e => e.IdDependiente)
+                    .HasName("PK__Dependie__366D077101F2DC99");
+
+                entity.ToTable("Dependiente");
+
+                entity.Property(e => e.ApellidoMaterno)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApellidoPaterno)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EstadoCivil)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.Genero)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Rfc)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("RFC");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.IdDependienteTipoNavigation)
+                    .WithMany(p => p.Dependientes)
+                    .HasForeignKey(d => d.IdDependienteTipo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Dependien__IdDep__6BE40491");
+
+                entity.HasOne(d => d.IdEmpleadoNavigation)
+                    .WithMany(p => p.Dependientes)
+                    .HasForeignKey(d => d.IdEmpleado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Dependien__IdEmp__6AEFE058");
+            });
+
+            modelBuilder.Entity<DependienteTipo>(entity =>
+            {
+                entity.HasKey(e => e.IdDependienteTipo)
+                    .HasName("PK__Dependie__2C220C629F6CFD2A");
+
+                entity.ToTable("DependienteTipo");
+
+                entity.Property(e => e.IdDependienteTipo).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Direccion>(entity =>

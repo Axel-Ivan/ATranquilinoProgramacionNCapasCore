@@ -12,7 +12,7 @@ namespace DL
             Polizas = new HashSet<Poliza>();
         }
 
-        public int? IdUsuario { get; set; }
+        public int IdUsuario { get; set; }
         public string UserName { get; set; } = null!;
         public string Contrasenia { get; set; } = null!;
         public string Nombre { get; set; } = null!;

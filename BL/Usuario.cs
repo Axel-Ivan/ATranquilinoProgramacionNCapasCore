@@ -161,7 +161,7 @@ namespace BL
                             //ML.Usuario usuario = new ML.Usuario();
 
                             usuario = new ML.Usuario();
-                            usuario.IdUsuario = obj.IdUsuario.Value;
+                            usuario.IdUsuario = obj.IdUsuario;
                             usuario.UserName = obj.UserName;
                             usuario.Contrasenia = obj.Contrasenia;
                             usuario.Nombre = obj.Nombre; //AS
@@ -232,7 +232,7 @@ namespace BL
                     if (procedure != null)
                     {
                             ML.Usuario usuario = new ML.Usuario();
-                            usuario.IdUsuario = procedure.IdUsuario.Value;
+                            usuario.IdUsuario = procedure.IdUsuario;
                             usuario.UserName = procedure.UserName;
                             usuario.Contrasenia = procedure.Contrasenia;
                             usuario.Nombre = procedure.Nombre; //AS
@@ -306,7 +306,7 @@ namespace BL
                     {
                         ML.Direccion direccion = new ML.Direccion();
                         direccion.Usuario = new ML.Usuario();
-                        direccion.Usuario.IdUsuario = procedure.IdUsuario.Value;
+                        direccion.Usuario.IdUsuario = procedure.IdUsuario;
                         direccion.Usuario.Nombre = procedure.Nombre;
 
                         result.Object = direccion;
@@ -347,7 +347,7 @@ namespace BL
                         {
                             ML.Direccion direccion = new ML.Direccion();
                             direccion.Usuario = new ML.Usuario();
-                            direccion.Usuario.IdUsuario = obj.IdUsuario.Value;
+                            direccion.Usuario.IdUsuario = obj.IdUsuario;
                             direccion.Usuario.UserName = obj.UserName;
                             direccion.Usuario.Contrasenia = obj.Contrasenia;
                             direccion.Usuario.Nombre = obj.Nombre; //AS

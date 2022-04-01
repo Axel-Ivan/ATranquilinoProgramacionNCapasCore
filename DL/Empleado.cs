@@ -5,6 +5,11 @@ namespace DL
 {
     public partial class Empleado
     {
+        public Empleado()
+        {
+            Dependientes = new HashSet<Dependiente>();
+        }
+
         public int IdEmpleado { get; set; }
         public string Rfc { get; set; } = null!;
         public string Nombre { get; set; } = null!;
@@ -21,14 +26,9 @@ namespace DL
 
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
         public virtual Poliza IdPolizaNavigation { get; set; } = null!;
+        public virtual ICollection<Dependiente> Dependientes { get; set; }
 
-        public string? EmpresaNombre { get; set; } = null;
-        public string? PolizaNombre { get; set; } = null;
-        public byte? IdSubPoliza { get; set; }
-        public string? NumeroPoliza { get; set; } = null;
-        public int? IdUsuario { get; set; }
-        public DateTime? FechaCreacion { get; set; } = null;
-        public DateTime? FechaModificacion { get; set; } = null;
-
+        public string EmpresaNombre { get; set; } = null;
+        public string PolizaNombre { get; set; } = null;
     }
 }

@@ -35,22 +35,22 @@
                         @Html.LabelFor(model => model.Nombre)
                         @*<div class="input-group">
                             <span class="input-group-addon" id="basic-addon1">@@</span>*@
-                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(this, 'lblErrorNombre')", @autocomplete = "off" })
                             @*</div>*@
                             @Html.ValidationMessageFor(model => model.Nombre)
-                            <label id="lblErrorNombre"></label>
+                            <label class="alert-danger" id="lblErrorNombre"></label>
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.ApellidoPaterno)
-                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoPaterno')", @autocomplete = "off" })
+                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoPaterno')", @autocomplete = "off" })
                         @Html.ValidationMessageFor(model => model.ApellidoPaterno)
-                        <label id="lblErrorApellidoPaterno"></label>
+                        <label class="alert-danger" id="lblErrorApellidoPaterno"></label>
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.ApellidoMaterno)
-                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoMaterno')", @autocomplete = "off" })
+                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoMaterno')", @autocomplete = "off" })
                         @Html.ValidationMessageFor(model => model.ApellidoMaterno)
-                        <label id="lblErrorApellidoMaterno"></label>
+                        <label class="alert-danger" id="lblErrorApellidoMaterno"></label>
                     </div>
                 </div>
                 <br />
@@ -62,13 +62,14 @@
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Email)
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail", @autocomplete = "off" })
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail", @onblur = "return ValidarEmail()", @autocomplete = "off" })
                         @Html.ValidationMessageFor(model => model.Email)
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Telefono)
-                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono", @autocomplete = "off" })
+                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono", @onkeypress = "return SoloNumeros(this, 'lblErrorTelefono')", @autocomplete = "off" })
                         @Html.ValidationMessageFor(model => model.Telefono)
+                         <label class="alert-danger" id="lblErrorTelefono"></label>
                     </div>
                 </div>
                 <br />
@@ -157,22 +158,46 @@
         }
     }
 
+    function SoloNumeros(e, controlId){
 
-    function SoloLetras(e, controlId){
-        //var letra = e.onkeypress.arguments[0].key;
-        var caracter = e.key;
-        var txtNombre = $("#txtNombre");
-        if(!/[^a-zA-Z/\s/]/.test(caracter))
+        var numero = e.onkeypress.arguments[0].key;
+        if(!/[^0-9]/.test(numero))
         {
-            txtNombre.css('border-color', 'green');
-            $('#' + controlId).text("");
+            $("#" + controlId).html('');
             return true;
         }
         else
         {
-            $('#' + controlId).text("Solo se aceptan letras!!!");
-            txtNombre.css('border-color', 'red');
-            //alert('Solo se aceptan letras!!!');
+            $("#" + controlId).html('Solo se aceptan números');
+            return false;
+        }
+    }
+
+    function SoloLetras(e, controlId){
+
+        var caracter = e.onkeypress.arguments[0].key;
+        if(!/[^a-zA-Z/\s/]/.test(caracter))
+        {
+            $("#" + controlId).html('');          
+            return true;
+        }
+        else
+        {
+            $("#" + controlId).html('Solo se aceptan letras');
+            return false;
+        }
+    }
+
+    function ValidarEmail(){
+        var regex = /^[\w-\.]+@@([\w-]+\.)+[\w-]{2,4}$/;
+        if(regex.test($('#txtEmail').val().trim()))
+        {
+            $("#txtEmail").css("border-color", "green");
+            return true;
+        }
+        else
+        {
+            $("#txtEmail").css("border-color", "red");
             return false;
         }
     }

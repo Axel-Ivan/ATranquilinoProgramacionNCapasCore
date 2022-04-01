@@ -10,6 +10,90 @@ namespace BL
 {
     public class Empleado
     {
+        public static ML.Result Add(ML.Empleado empleado)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+                    var procedure = context.Database.ExecuteSqlRaw($"EmpleadoAdd '{empleado.RFC}', '{empleado.Nombre}', '{empleado.ApellidoPaterno}', '{empleado.ApellidoMaterno}', '{empleado.Email}', '{empleado.Telefono}', '{empleado.FechaNacimiento}', '{empleado.NSS}', '{empleado.FechaIngreso}', '{empleado.Foto}', '{empleado.Empresa.IdEmpresa}', '{empleado.Poliza.IdPoliza}'");
+
+                    if(procedure >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public static ML.Result Update(ML.Empleado empleado)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+                    var procedure = context.Database.ExecuteSqlRaw($"EmpleadoUpdate '{empleado.IdEmpleado}', '{empleado.RFC}', '{empleado.Nombre}', '{empleado.ApellidoPaterno}', '{empleado.ApellidoMaterno}', '{empleado.Email}', '{empleado.Telefono}', '{empleado.FechaNacimiento}', '{empleado.NSS}', '{empleado.FechaIngreso}', '{empleado.Foto}', '{empleado.Empresa.IdEmpresa}', '{empleado.Poliza.IdPoliza}'");
+
+                    if(procedure >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public static ML.Result Delete(int IdEmpleado)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+                    var procedure = context.Database.ExecuteSqlRaw($"EmpleadoDelete {IdEmpleado}");
+
+                    if(procedure >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
         public static ML.Result GetAll(ML.Empleado empleado)
         {
             ML.Result result = new ML.Result();
