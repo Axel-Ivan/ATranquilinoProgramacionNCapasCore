@@ -13,7 +13,7 @@ namespace ML
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string DireccionWeb { get; set; }
-        public byte[] Logo { get; set; }
+        public string Logo { get; set; }
         public List<object> Empresas { get; set; }
     }
 }

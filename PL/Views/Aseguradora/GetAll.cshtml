@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <h5 class="text-center">Seleccione Selecione el boton de "Agregar" para añadir un usuario, el boton de amarillo para actualizarlo, y el boton rojo para eliminar el usuario</h5>
+            <h5 class="text-center">Seleccione el boton de "Agregar" para añadir una aseguradora, el boton de amarillo para actualizarla, y el boton rojo para eliminarla</h5>
         </div>
     </div>
     <div class="row">
@@ -55,7 +55,8 @@
 
                                 @if (aseguradora.Imagen != null)
                                 {
-                                    <td><img src="data:image/jpeg;base64,@Convert.ToBase64String(aseguradora.Imagen)" style=" height:100px; width: 100px;" /></td>
+                                    @*<td><img src="data:image/jpeg;base64,@Convert.ToBase64String(aseguradora.Imagen)" style=" height:100px; width: 100px;" /></td>*@
+                                    <td><img src="data:image/jpeg;base64, @aseguradora.Imagen" style=" height:100px; width: 100px;" /></td>
                                 }
                                 else
                                 {

@@ -13,16 +13,14 @@ namespace ML
         public int IdAseguradora { get; set; }
 
         [Display(Name = "Nombre: ")]
-        [Required(ErrorMessage = "El nombre de la aseguradora es obligatorio.")]
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
 
-        public string FechaCreacion { get; set; }
-        public string FechaModificacion { get; set; }
-        public ML.Usuario Usuario { get; set; }
+        public string? FechaCreacion { get; set; }
+        public string? FechaModificacion { get; set; }
+        public ML.Usuario? Usuario { get; set; }
 
         [Display(Name = "Logo: ")]
-        [Required(ErrorMessage = "El logo de la aseguradora es obligatorio.")]
-        public byte[] Imagen { get; set; }
-        public List<object> Aseguradoras { get; set; }
+        public string? Imagen { get; set; }
+        public List<object>? Aseguradoras { get; set; }
     }
 }

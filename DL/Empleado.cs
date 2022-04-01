@@ -15,11 +15,20 @@ namespace DL
         public DateTime? FechaNacimiento { get; set; }
         public string Nss { get; set; } = null!;
         public DateTime FechaIngreso { get; set; }
-        public byte[]? Foto { get; set; }
+        public string? Foto { get; set; }
         public int IdEmpresa { get; set; }
         public int IdPoliza { get; set; }
 
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
         public virtual Poliza IdPolizaNavigation { get; set; } = null!;
+
+        public string? EmpresaNombre { get; set; } = null;
+        public string? PolizaNombre { get; set; } = null;
+        public byte? IdSubPoliza { get; set; }
+        public string? NumeroPoliza { get; set; } = null;
+        public int? IdUsuario { get; set; }
+        public DateTime? FechaCreacion { get; set; } = null;
+        public DateTime? FechaModificacion { get; set; } = null;
+
     }
 }

@@ -18,7 +18,7 @@ namespace ML
         public string FechaNacimiento { get; set; }
         public string NSS { get; set; }
         public string FechaIngreso { get; set; }
-        public byte[] Foto { get; set; }
+        public string Foto { get; set; }
         public ML.Empresa Empresa { get; set; }
         public ML.Poliza Poliza { get; set; }
         public List<object> Empleados { get; set; }

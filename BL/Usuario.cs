@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace BL
 {
@@ -19,11 +22,50 @@ namespace BL
                 using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
 
-                    ObjectParameter OutputParameter = new ObjectParameter("IdUsuario", typeof(int));
-                    
-                    var procedure = context.Database.ExecuteSqlRaw($"UsuarioAdd '{usuario.UserName}', '{usuario.Contrasenia}', '{usuario.Nombre}', '{usuario.ApellidoPaterno}', '{usuario.ApellidoMaterno}', '{usuario.Email}', '{usuario.Sexo}', '{usuario.Telefono}', '{usuario.Celular}', '{usuario.FechaNacimiento}', '{usuario.Estatus}', '{usuario.CURP}', '{usuario.Imagen}', '{usuario.Rol.IdRol}', '{OutputParameter}'");
 
-                    result.Object = Convert.ToInt32(OutputParameter.Value);
+
+
+                    //var procedure = context.Database.ExecuteSqlRaw($"UsuarioAdd '{usuario.UserName}', '{usuario.Contrasenia}', '{usuario.Nombre}', '{usuario.ApellidoPaterno}', '{usuario.ApellidoMaterno}', '{usuario.Email}', '{usuario.Sexo}', '{usuario.Telefono}', '{usuario.Celular}', '{usuario.FechaNacimiento}', '{usuario.Estatus}', '{usuario.CURP}', '{usuario.Imagen}', '{usuario.Rol.IdRol}', '{IdUsuario}'");
+
+                    var parameters = new[] {
+                    new SqlParameter("@UserName", SqlDbType.VarChar) {Value=usuario.UserName},
+                    new SqlParameter("@Contrasenia", SqlDbType.VarChar) {Value=usuario.Contrasenia},
+                    new SqlParameter("@Nombre", SqlDbType.VarChar) {Value=usuario.Nombre},
+                    new SqlParameter("@ApellidoPaterno", SqlDbType.VarChar) {Value=usuario.ApellidoPaterno},
+                    new SqlParameter("@ApellidoMaterno", SqlDbType.VarChar) {Value=usuario.ApellidoMaterno},
+                    new SqlParameter("@Email", SqlDbType.VarChar) {Value=usuario.Email},
+                    new SqlParameter("@Sexo", SqlDbType.Char) {Value=usuario.Sexo},
+                    new SqlParameter("@Telefono", SqlDbType.VarChar) {Value=usuario.Telefono},
+                    new SqlParameter("@Celular", SqlDbType.VarChar) {Value=usuario.Celular},
+                    new SqlParameter("@FechaNacimiento", SqlDbType.VarChar) {Value=usuario.FechaNacimiento},
+                    new SqlParameter("@Estatus", SqlDbType.TinyInt) {Value=usuario.Estatus},
+                    new SqlParameter("@CURP", SqlDbType.VarChar) {Value=usuario.CURP},
+                    new SqlParameter("@Imagen", SqlDbType.VarChar) {Value=usuario.Imagen},
+                    new SqlParameter("@IdRol", SqlDbType.TinyInt) {Value=usuario.Rol.IdRol},
+                    new SqlParameter("@IdUsuario", SqlDbType.Int) { Direction = ParameterDirection.InputOutput, Value = 0 }
+                    };
+
+                    var procedure = context.Database.ExecuteSqlRaw("UsuarioAdd " +
+                        "@UserName, " +
+                        "@Contrasenia, " +
+                        "@Nombre, " +
+                        "@ApellidoPaterno, " +
+                        "@ApellidoMaterno, " +
+                        "@Email, " +
+                        "@Sexo, " +
+                        "@Telefono, " +
+                        "@Celular, " +
+                        "@FechaNacimiento, " +
+                        "@Estatus, " +
+                        "@CURP, " +
+                        "@Imagen, " +
+                        "@IdRol, " +
+                        "@IdUsuario OUTPUT", parameters);
+
+                    //var procedure = context.Database.ExecuteSqlRaw($"UsuarioAddPrueba '{usuario.UserName}', '{usuario.Contrasenia}', '{usuario.Nombre}', '{usuario.ApellidoPaterno}', '{usuario.ApellidoMaterno}', '{usuario.Email}', '{usuario.Sexo}', '{usuario.Telefono}', '{usuario.Celular}', '{usuario.FechaNacimiento}', '{usuario.Estatus}', '{usuario.CURP}', '{usuario.Imagen}', '{usuario.Rol.IdRol}'");
+
+                    //result.Object = Convert.ToInt32(IdUsuario.Value);
+                    result.Object = Convert.ToInt32(parameters[14].Value);
 
                     if (procedure >= 1)
                     {
@@ -53,7 +95,6 @@ namespace BL
                 {
 
                     var procedure = context.Database.ExecuteSqlRaw($"UsuarioUpdate '{usuario.IdUsuario}', '{usuario.UserName}', '{usuario.Contrasenia}', '{usuario.Nombre}', '{usuario.ApellidoPaterno}', '{usuario.ApellidoMaterno}', '{usuario.Email}', '{usuario.Sexo}', '{usuario.Telefono}', '{usuario.Celular}', '{usuario.FechaNacimiento}', '{usuario.Estatus}', '{usuario.CURP}', '{usuario.Imagen}', '{usuario.Rol.IdRol}'");
-                    //var procedure = context.UsuarioUpdate(usuario.IdUsuario, usuario.UserName, usuario.Contrasenia, usuario.Nombre, usuario.ApellidoPaterno, usuario.ApellidoMaterno, usuario.Email, usuario.Sexo, usuario.Telefono, usuario.Celular, DateTime.Parse(usuario.FechaNacimiento), usuario.Estatus, usuario.CURP, usuario.Imagen, usuario.Rol.IdRol);
 
                     if (procedure >= 1)
                     {
@@ -120,7 +161,7 @@ namespace BL
                             //ML.Usuario usuario = new ML.Usuario();
 
                             usuario = new ML.Usuario();
-                            usuario.IdUsuario = obj.IdUsuario;
+                            usuario.IdUsuario = obj.IdUsuario.Value;
                             usuario.UserName = obj.UserName;
                             usuario.Contrasenia = obj.Contrasenia;
                             usuario.Nombre = obj.Nombre; //AS
@@ -130,7 +171,8 @@ namespace BL
                             usuario.Sexo = obj.Sexo;
                             usuario.Telefono = obj.Telefono;
                             usuario.Celular = obj.Celular;
-                            usuario.FechaNacimiento = Convert.ToString(obj.FechaNacimiento);
+                            usuario.FechaNacimiento =Convert.ToString(obj.FechaNacimiento);
+                            usuario.FechaNacimiento = usuario.FechaNacimiento.Remove(10, 15);
                             usuario.Estatus = Convert.ToByte(obj.Estatus);
                             usuario.CURP = obj.Curp;
                             usuario.Imagen = obj.Imagen;
@@ -190,7 +232,7 @@ namespace BL
                     if (procedure != null)
                     {
                             ML.Usuario usuario = new ML.Usuario();
-                            usuario.IdUsuario = procedure.IdUsuario;
+                            usuario.IdUsuario = procedure.IdUsuario.Value;
                             usuario.UserName = procedure.UserName;
                             usuario.Contrasenia = procedure.Contrasenia;
                             usuario.Nombre = procedure.Nombre; //AS
@@ -201,6 +243,7 @@ namespace BL
                             usuario.Telefono = procedure.Telefono;
                             usuario.Celular = procedure.Celular;
                             usuario.FechaNacimiento = Convert.ToString(procedure.FechaNacimiento);
+                            usuario.FechaNacimiento = usuario.FechaNacimiento.Remove(10, 15);
                             usuario.Estatus = Convert.ToByte(procedure.Estatus);
                             usuario.CURP = procedure.Curp;
                             usuario.Imagen = procedure.Imagen;
@@ -246,6 +289,47 @@ namespace BL
 
             return result;
         }
+
+        public static ML.Result GetLastId()
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+                    var procedure = context.Usuarios.FromSqlRaw("GetLastIdUsuario").AsEnumerable().FirstOrDefault();
+
+                    result.Objects = new List<object>();
+
+                    if (procedure != null)
+                    {
+                        ML.Direccion direccion = new ML.Direccion();
+                        direccion.Usuario = new ML.Usuario();
+                        direccion.Usuario.IdUsuario = procedure.IdUsuario.Value;
+                        direccion.Usuario.Nombre = procedure.Nombre;
+
+                        result.Object = direccion;
+
+                        result.Correct = true;
+
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        Console.WriteLine("No se encontraron registros...");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+
         public static ML.Result GetAllConDireccion(ML.Usuario usuario)
         {
             ML.Result result = new ML.Result();
@@ -263,7 +347,7 @@ namespace BL
                         {
                             ML.Direccion direccion = new ML.Direccion();
                             direccion.Usuario = new ML.Usuario();
-                            direccion.Usuario.IdUsuario = obj.IdUsuario;
+                            direccion.Usuario.IdUsuario = obj.IdUsuario.Value;
                             direccion.Usuario.UserName = obj.UserName;
                             direccion.Usuario.Contrasenia = obj.Contrasenia;
                             direccion.Usuario.Nombre = obj.Nombre; //AS

@@ -12,11 +12,11 @@ namespace DL
             Polizas = new HashSet<Poliza>();
         }
 
-        public int IdUsuario { get; set; }
+        public int? IdUsuario { get; set; }
         public string UserName { get; set; } = null!;
         public string Contrasenia { get; set; } = null!;
         public string Nombre { get; set; } = null!;
-        public string? ApellidoPaterno { get; set; } 
+        public string? ApellidoPaterno { get; set; }
         public string? ApellidoMaterno { get; set; }
         public string Email { get; set; } = null!;
         public string Sexo { get; set; } = null!;
@@ -25,7 +25,7 @@ namespace DL
         public DateTime? FechaNacimiento { get; set; }
         public bool Estatus { get; set; }
         public string? Curp { get; set; }
-        public byte[]? Imagen { get; set; }
+        public string? Imagen { get; set; }
         public byte IdRol { get; set; }
 
         public virtual Rol IdRolNavigation { get; set; } = null!;
@@ -47,5 +47,6 @@ namespace DL
         public string? EstadoNombre { get; set; } = null;
         public int? IdPais { get; set; }
         public string? PaisNombre { get; set; } = null;
+
     }
 }

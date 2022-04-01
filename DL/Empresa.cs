@@ -15,7 +15,7 @@ namespace DL
         public string? Telefono { get; set; }
         public string Email { get; set; } = null!;
         public string DireccionWeb { get; set; } = null!;
-        public byte[]? Logo { get; set; }
+        public string? Logo { get; set; }
 
         public virtual ICollection<Empleado> Empleados { get; set; }
     }

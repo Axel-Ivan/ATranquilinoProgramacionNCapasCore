@@ -1,8 +1,144 @@
-﻿
+﻿@model ML.Empleado  
 @{
-    ViewData["Title"] = "GetAll";
+    ViewBag.Title = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+} 
 
-<h1>GetAll</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xl-12">
+            <h2>Empleados</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <h6 class="text-center">Selecione el boton "+" para añadir un empleado, el boton de amarillo para actualizarlo, y el boton rojo para eliminarlo </h6>
+        </div>
+    </div>
+    <br />
 
+    <div class="align-content-center">
+        @using(Html.BeginForm("GetAll", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+            <div class="col-xl-4">
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @placeholder = "Nombre", @onkeypress = "return SoloLetras(this, 'lblNombre')", @autocomplete = "off" })
+            </div>
+            <div class="col-xl-4">
+                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoPaterno')", @placeholder = "Apellido Paterno", @autocomplete = "off" })
+            </div>
+            <div class="col-xl-4">
+                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoMaterno')",  @placeholder = "Apellido Materno", @autocomplete = "off" })
+            </div>
+        </div> 
+        <br />
+        <div class="row justify-content-end"> @* Justificar todo a la derecha (al final) *@
+            <div class="col-xl-4"> 
+                <input type="submit" value="Buscar" class="btn btn-primary float-end" formmethod="post"> @* La clase float-end mueve a la derecha el elemento *@
+            </div>
+        </div>
+        <br />
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <p class="text-right">@Html.ActionLink("+", "Form", "Usuario", htmlAttributes: new { @class = "btn btn-success" })</p> <!-- text-right de prueba para este mensaje -->
+        </div>
+    </div>
+    <br/>
+
+    @if(Model.Empleados.Count > 0)
+    {
+        <div class="row">
+            <div class="col-xl-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Editar</td>
+                            <td class = "form-group" style = "display: none;">IdEmpleado</td>
+                            <td>Nombre Completo</td>
+                            <td>RFC</td>
+                            <td>Email</td>
+                            <td>Telefono</td>
+                            <td>Fecha de Nacimiento</td>
+                            <td>NSS</td>
+                            <td>Fecha de Ingreso</td>
+                            <td>Foto</td>
+                            <td>Empresa</td>
+                            <td>Poliza</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach (ML.Empleado empleado in Model.Empleados)
+                    {
+                        <tr class="text-center">
+                            <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Empleado", new { IdEmpleado = empleado.IdEmpleado })"></a></td>
+                            <td class = "form-group" style = "display: none;">@empleado.IdEmpleado</td>
+                            <td>@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno</td>
+                            <td>@empleado.RFC</td>
+                            <td>@empleado.Email</td>
+                            <td>@empleado.Telefono</td>
+                            <td>@empleado.FechaNacimiento</td> 
+                            <td>@empleado.NSS</td>
+                            <td>@empleado.FechaIngreso</td>
+                            @if (empleado.Foto != null)
+                            {
+                                <td><img src="data:image/jpeg;base64, @empleado.Foto" style=" height:150px; width: 150px;"  /></td>
+                            }
+                            else
+                            {
+                                <td><img src="~/img/NoImage.jpg" style=" height:100px; width:100px;" /></td>
+                            } 
+                            <td class = "form-group" style = "display: none;">@empleado.Empresa.IdEmpresa</td>
+                            <td>@empleado.Empresa.Nombre</td>
+                            <td class = "form-group" style = "display: none;">@empleado.Poliza.IdPoliza</td>
+                            <td>@empleado.Poliza.Nombre</td>                            
+
+                            <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Empleado", new { IdEmpleado = empleado.IdEmpleado })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de usuario!!!
+                </div>
+            </div>
+        </div>
+    }
+   
+</div>
+
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<script>
+    function SoloLetras(e, controlId){
+
+        var caracter = e.onkeypress.arguments[0].key;
+        if(!/[^a-zA-Z/\s/]/.test(caracter))
+        {
+            $("#" + controlId).html('');          
+            return true;
+        }
+        else
+        {
+            $("#" + controlId).html('Solo se aceptan letras');
+            return false;
+        }
+    }
+</script>

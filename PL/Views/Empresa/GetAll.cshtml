@@ -1,0 +1,85 @@
+﻿@model ML.Empresa
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Empresas</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione el boton de "Agregar" para añadir una empresa, el boton de amarillo para actualizarla, y el boton rojo para eliminarla</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="text-right">@Html.ActionLink("+", "Form", "Empresa", htmlAttributes: new { @class = "btn btn-success" })</p>
+        </div>
+    </div>
+    <br/>
+
+    @if(Model.Empresas.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Editar</td>
+                            <td class = "form-group" style = "display: none;">IdEmpresa</td>
+                            <td>Nombre</td>
+                            <td>Telefono</td>
+                            <td>Email</td>
+                            <td>Direccion Web</td>
+                            <td>Logo</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(ML.Empresa empresa in Model.Empresas)
+                        {
+                            <tr class="text-center">
+                                <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Empresa", new { IdEmpresa = empresa.IdEmpresa })"></a></td>
+                                <td class = "form-group" style = "display: none;">@empresa.IdEmpresa</td>                                
+                                <td>@empresa.Nombre</td>
+                                <td>@empresa.Telefono</td>
+                                <td>@empresa.Email</td>
+                                <td>@empresa.DireccionWeb</td>                               
+                                @if (empresa.Logo != null)
+                                {
+                                    @*<td><img src="data:image/jpeg;base64,@Convert.ToBase64String(aseguradora.Imagen)" style=" height:100px; width: 100px;" /></td>*@
+                                    <td><img src="data:image/jpeg;base64, @empresa.Logo" style=" height:100px; width: 100px;" /></td>
+                                }
+                                else
+                                {
+                                    <td><img src="~/img/NoImage.jpg" style=" height:80px; width:100px;" /></td>
+                                }
+
+
+                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Empresa", new { IdEmpresa = empresa.IdEmpresa })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de Empresas!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+

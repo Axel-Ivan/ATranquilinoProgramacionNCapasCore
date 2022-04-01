@@ -55,6 +55,8 @@ namespace DL
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.Imagen).IsUnicode(false);
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -143,6 +145,8 @@ namespace DL
 
                 entity.Property(e => e.FechaNacimiento).HasColumnType("datetime");
 
+                entity.Property(e => e.Foto).IsUnicode(false);
+
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -188,6 +192,8 @@ namespace DL
                 entity.Property(e => e.Email)
                     .HasMaxLength(254)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Logo).IsUnicode(false);
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(100)
@@ -347,6 +353,8 @@ namespace DL
                     .IsUnicode(false);
 
                 entity.Property(e => e.FechaNacimiento).HasColumnType("date");
+
+                entity.Property(e => e.Imagen).IsUnicode(false);
 
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)

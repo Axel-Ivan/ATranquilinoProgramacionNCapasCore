@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using System.Data;
+using System.Data.SqlClient;
 namespace BL
 {
     public class Aseguradora
@@ -12,7 +13,41 @@ namespace BL
             {
                 using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
-                    var procedure = context.Database.ExecuteSqlRaw($"AseguradoraAdd {aseguradora.Nombre}, {aseguradora.Usuario.IdUsuario}, {aseguradora.Imagen}");
+                    //var username = new SqlParameter();
+                    //username.ParameterName = "@Username";
+                    //username.SqlDbType = SqlDbType.VarChar;
+                    //username.Value = aseguradora.Nombre;
+
+                    //var email = new SqlParameter();
+                    //email.ParameterName = "@Email";
+                    //email.SqlDbType = SqlDbType.VarChar;
+                    //email.Value = aseguradora.Nombre;
+              
+                    //var IdUsuario = new SqlParameter();
+                    //IdUsuario.ParameterName = "@IdUsuario";
+                    //IdUsuario.SqlDbType = SqlDbType.Int;
+                    //IdUsuario.Direction = ParameterDirection.Output;
+
+                    //var parameters = new[] {
+                    //new SqlParameter("@Username", SqlDbType.VarChar) {Value=aseguradora.Nombre},
+                    //new SqlParameter("@Email", SqlDbType.VarChar) {Value=aseguradora.Nombre},
+                    //new SqlParameter("@IdUsuario", SqlDbType.Int) { Direction = ParameterDirection.InputOutput, Value = 0 }
+                    //};
+
+                    //var procedure =context.Database.ExecuteSqlInterpolatedAsync(
+                    //    $"EXEC dbo.InsertTest @param1={"test"},@param2={"test2"}, @param3={output}");
+
+                    //var procedure = context.Database.ExecuteSqlRaw($"EXEC UsuarioTest @Username={"username"},@Email={"email"}, @IdUsuario={IdUsuario}");
+
+                    //var procedure = context.Database.ExecuteSqlRaw("UsuarioTest", username, Email, IdUsuario);
+                    //+
+                    //"@Username," +
+                    //"@Email," +                        
+                    //"@IdUsuario OUTPUT",);
+
+                    //result.Object = Convert.ToInt32(context.Parameters["@IdUsuario"].Value);
+
+                    var procedure = context.Database.ExecuteSqlRaw($"AseguradoraAdd '{aseguradora.Nombre}', '{aseguradora.Usuario.IdUsuario}', '{aseguradora.Imagen}'");
 
                     if (procedure >= 1)
                     {
@@ -40,9 +75,9 @@ namespace BL
             {
                 using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
-                    var procedure = context.Database.ExecuteSqlRaw($"AseguradoraUpdate {aseguradora.IdAseguradora}, {aseguradora.Nombre}, {aseguradora.Usuario.IdUsuario}, {aseguradora.Imagen}");
+                    var procedure = context.Database.ExecuteSqlRaw($"AseguradoraUpdate '{aseguradora.IdAseguradora}', '{aseguradora.Nombre}', '{aseguradora.Usuario.IdUsuario}', '{aseguradora.Imagen}'");
 
-                    if(procedure >= 1)
+                    if (procedure >= 1)
                     {
                         result.Correct = true;
                     }
@@ -70,7 +105,7 @@ namespace BL
                 {
                     var procedure = context.Database.ExecuteSqlRaw($"AseguradoraDelete {IdAseguradora}");
 
-                    if(procedure >= 1)
+                    if (procedure >= 1)
                     {
                         result.Correct = true;
                     }
@@ -94,12 +129,12 @@ namespace BL
 
             try
             {
-                using(DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
                     var procedure = context.Aseguradoras.FromSqlRaw("AseguradoraGetAll").ToList();
                     result.Objects = new List<object>();
 
-                    if(procedure != null)
+                    if (procedure != null)
                     {
                         foreach (var obj in procedure)
                         {
@@ -136,12 +171,12 @@ namespace BL
 
             try
             {
-                using(DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
                     var procedure = context.Aseguradoras.FromSqlRaw($"AseguradoraGetId {IdAseguradora}").AsEnumerable().FirstOrDefault();
                     result.Objects = new List<object>();
 
-                    if(procedure != null)
+                    if (procedure != null)
                     {
                         ML.Aseguradora aseguradora = new ML.Aseguradora();
                         aseguradora.IdAseguradora = procedure.IdAseguradora;
@@ -165,7 +200,7 @@ namespace BL
             catch (Exception ex)
             {
                 result.Correct = false;
-                result.ErrorMessage=ex.Message;
+                result.ErrorMessage = ex.Message;
             }
 
             return result;

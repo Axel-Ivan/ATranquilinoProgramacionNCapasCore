@@ -27,28 +27,28 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Nombre)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(this, 'lblErrorNombre')", @autocomplete = "off" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Nombre)
                             <label class="alert-danger" id="lblErrorNombre"></label>
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.ApellidoPaterno)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoPaterno')", @autocomplete = "off" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.ApellidoPaterno)
                             <label class="alert-danger" id="lblErrorApellidoPaterno"></label>
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.ApellidoMaterno)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoMaterno')", @autocomplete = "off" })
-                           @* </div>*@
+                        </div>
                             @Html.ValidationMessageFor(model => model.Usuario.ApellidoMaterno)
                             <label class="alert-danger" id="lblErrorApellidoMaterno"></label>
                         </div>
@@ -59,7 +59,7 @@
                         <div class = "form-group" style = "display: none;"> 
                         @Html.LabelFor(model => model.Usuario.IdUsuario, new { @class = "hidden"})
                         @Html.TextBoxFor(model => model.Usuario.IdUsuario, new { @class = "hidden from-control", autocomplete = "off" })
-                        @Html.ValidationMessageFor(model => model.Usuario.IdUsuario)
+                        @*@Html.ValidationMessageFor(model => model.Usuario.IdUsuario)*@
                         </div>
                     </div>
                 </div>
@@ -67,28 +67,28 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.UserName)
-                       @* <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.UserName, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.UserName)
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Email)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.Email, new { @class = "form-control", @id = "txtEmail", @onblur = "return ValidarEmail()", @autocomplete = "off" })                           
-                           @* </div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Email)
                             @*<label class="alert-danger" id="lblErrorEmail"></label>*@
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Contrasenia)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">?</span>
                             @*@Html.TextBoxFor(model => model.Usuario.Contrasenia, new { @class = "form-control" })*@
-                            @Html.PasswordFor(model => model.Usuario.Contrasenia, new { @class = "form-control", @id = "txtContrasenia", @onblur = "return ValidarContrasenia()", @autocomplete = "off" })
-                            @*</div>*@
+                            @Html.TextBoxFor(model => model.Usuario.Contrasenia, new { @class = "form-control", @id = "txtContrasenia", @type = "password", @onblur = "return ValidarContrasenia()", @autocomplete = "off" })
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Contrasenia, "", new { @class = "error" })
                         </div>
                 </div>   
@@ -97,12 +97,12 @@
                 
                 <div class = "row">
                     <div class="col-md-4">
-                        @Html.LabelFor(model => model.Usuario.Contrasenia)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        @Html.Label("Confirmar Contraseña")
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">?</span>
                             @*@Html.TextBoxFor(model => model.Usuario.Contrasenia, new { @class = "form-control" })*@
-                            @Html.PasswordFor(model => model.Usuario.Contrasenia, new { @class = "form-control", @id = "txtConfirmarContrasenia", @onblur = "return ValidarContrasenia()", @autocomplete = "off" })
-                            @*</div>*@
+                            @Html.TextBoxFor(model => model.Usuario.Contrasenia, new { @class = "form-control", @id = "txtConfirmarContrasenia", @type = "password", @onblur = "return ValidarContrasenia()", @autocomplete = "off" })
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Contrasenia, "", new { @class = "error" })
                         </div>
                 </div>
@@ -112,26 +112,26 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Sexo)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.Sexo, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Sexo)
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.FechaNacimiento)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.FechaNacimiento, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.FechaNacimiento)
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.CURP)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.CURP, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.CURP)
                         </div>
                 </div>
@@ -139,28 +139,28 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Telefono)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.Telefono, new { @class = "form-control", @onkeypress = "return SoloNumeros(this, 'lblErrorTelefono')", @autocomplete = "off" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Telefono)
                             <label class="alert-danger" id="lblErrorTelefono"></label>
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Celular)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.Celular, new { @class = "form-control", @onkeypress = "return SoloNumeros(this, 'lblErrorCelular')", @autocomplete = "off" })
-                           @* </div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Celular)
                             <label class="alert-danger" id="lblErrorCelular"></label>
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Usuario.Estatus)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Usuario.Estatus, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Usuario.Estatus)
                         </div>
                 </div>
@@ -177,26 +177,26 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Calle)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.Calle, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.Calle)
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.NumeroInterior)
-                       @* <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.NumeroInterior, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.NumeroInterior)
                         </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.NumeroExterior)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
+                        <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@@</span>
                             @Html.TextBoxFor(model => model.NumeroExterior, new { @class = "form-control" })
-                            @*</div>*@
+                            </div>
                             @Html.ValidationMessageFor(model => model.NumeroExterior)
                         </div>
                 </div>
@@ -266,16 +266,18 @@
                         <input type="file" name="fuImagen" onchange="readURL(this);" />
                         @if (Model.Usuario.Imagen != null)
                         {
-                            <img id="ImagenPreview" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Usuario.Imagen)" width="100" height="100" />
+                            @*<img id="ImagenPreview" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Usuario.Imagen)" width="100" height="100" />*@
+                            <img id="ImagenPreview" src="data:image/jpeg;base64, @Model.Usuario.Imagen" width="100" height="100" />
                         }
                         else
                         {
                             <img id="ImagenPreview" src="~/img/NoImage.jpg" style="height:100px; width:100px;" />
                         }
-                        @Html.ValidationMessageFor(model => model.Usuario.Imagen)
+                        @Html.ValidationMessageFor(model => model.Usuario.Imagen, null, new { @class = "text-danger" })
+                        
                     </div>
+                    @Html.HiddenFor(model => model.Usuario.Imagen)
                 </div>
-                
                 <br/>
                 
     <div class="row">
@@ -288,7 +290,9 @@
     </div>
                 
             }
-            @Html.HiddenFor(model => model.Usuario.Imagen)
+
+            
+
         </div>
     </div>
 
@@ -435,14 +439,15 @@
         {
             //$("#" + controlId).html('');
             $("#txtEmail").css("border-color", "green");
-            alert('Correo validado correctamente');
+            //alert('Correo validado correctamente');
+            //$("#txtEmail").html('Correo validado correctamente');
             return true;
         }
         else
         {
             //$("#" + controlId).html('El email no es válido');
             $("#txtEmail").css("border-color", "red");
-            alert('Correo no validado correctamente');
+            //alert('Correo incorrecto');
             return false;
         }
     }
@@ -453,12 +458,15 @@
         if (contrasenia == ConfirmarContrasenia)
         {
             $("#txtConfirmarContrasenia").css("border-color", "green");
+            $("#txtContrasenia").css("border-color", "green");
             return true;
         }
         else
         {
             $("#txtConfirmarContrasenia").css("border-color", "red");
-            alert('Las contraseñas deben coincidir!!!');
+            $("#txtContrasenia").css("border-color", "red");
+            //alert('Las contraseñas deben coincidir!!!'); 
+            $("#ConfirmarContrasenia").html('Las contraseñas deben coincidir');
             return false;
         }
 

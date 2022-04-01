@@ -45,8 +45,7 @@ namespace BL
             {
                 using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
-                    var procedure = context.Database.ExecuteSqlRaw($"DireccionUpdate {direccion.Usuario.IdUsuario}, {direccion.Calle}, {direccion.NumeroInterior}, {direccion.NumeroExterior}, {direccion.Colonia.IdColonia}");
-                    //var procedure = context.DireccionUpdate(direccion.Usuario.IdUsuario, direccion.Calle, direccion.NumeroInterior, direccion.NumeroExterior, direccion.Colonia.IdColonia);
+                    var procedure = context.Database.ExecuteSqlRaw($"DireccionUpdate '{direccion.Usuario.IdUsuario}', '{direccion.Calle}', '{direccion.NumeroInterior}', '{direccion.NumeroExterior}', '{direccion.Colonia.IdColonia}'");
 
                     if (procedure >= 1)
                     {
@@ -109,7 +108,7 @@ namespace BL
                     {
                         ML.Direccion direccion = new ML.Direccion();
                         direccion.Usuario = new ML.Usuario();
-                        direccion.Usuario.IdUsuario = procedure.IdUsuario;
+                        direccion.Usuario.IdUsuario = procedure.IdUsuario.Value;
                         direccion.Usuario.UserName = procedure.UserName;
                         direccion.Usuario.Contrasenia = procedure.Contrasenia;
                         direccion.Usuario.Nombre = procedure.Nombre; //AS
@@ -120,6 +119,7 @@ namespace BL
                         direccion.Usuario.Telefono = procedure.Telefono;
                         direccion.Usuario.Celular = procedure.Celular;
                         direccion.Usuario.FechaNacimiento = Convert.ToString(procedure.FechaNacimiento);
+                        direccion.Usuario.FechaNacimiento = direccion.Usuario.FechaNacimiento.Remove(10, 15);
                         direccion.Usuario.Estatus = Convert.ToByte(procedure.Estatus);
                         direccion.Usuario.CURP = procedure.Curp;
                         direccion.Usuario.Imagen = procedure.Imagen;

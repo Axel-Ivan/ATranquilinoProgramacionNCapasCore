@@ -52,36 +52,54 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult Form(ML.Aseguradora aseguradora)
         {
-            //HttpPostedFileBase file = Request.Files["fuImagen"];
-            ML.Result result = new ML.Result();
-            //if (file.ContentLength > 0)
-            //{
-            //    aseguradora.Imagen = ConvertToBytes(file);
-            //}
-
-            if (aseguradora.IdAseguradora == 0)
+            if(ModelState.IsValid)
             {
-                result = BL.Aseguradora.Add(aseguradora);
-                if (result.Correct)
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                ML.Result result = new ML.Result();
+                IFormFile Imagen = Request.Form.Files["fuImagen"];
+
+                if (Imagen != null)
                 {
-                    ViewBag.Message = "La aseguradora se ingresó correctamente!!!";
+                    byte[] imageArray = ConvertToBytes(Imagen);
+                    aseguradora.Imagen = Convert.ToBase64String(imageArray);
+                }
+
+                if (aseguradora.IdAseguradora == 0)
+                {
+                    result = BL.Aseguradora.Add(aseguradora);
+                    if (result.Correct)
+                    {
+                        ViewBag.Message = "La aseguradora se ingresó correctamente!!!";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Ocurrió un error al momento de ingresar la aseguradora: " + result.ErrorMessage;
+                    }
                 }
                 else
                 {
-                    ViewBag.Message = "Ocurrió un error al momento de ingresar la aseguradora: " + result.ErrorMessage;
+                    result = BL.Aseguradora.Update(aseguradora);
+                    if (result.Correct)
+                    {
+                        ViewBag.Message = "La aseguradora se actualizó correctamente!!!";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "La aseguradora no se actualizó, ocurrió el siguiente error: " + result.ErrorMessage;
+                    }
                 }
+
+                return PartialView("ValidationModal");
             }
+
             else
             {
-                result = BL.Aseguradora.Update(aseguradora);
-                if (result.Correct)
-                {
-                    ViewBag.Message = "La aseguradora se actualizó correctamente!!!";
-                }
-                else
-                {
-                    ViewBag.Message = "La aseguradora no se actualizó, ocurrió el siguiente error: " + result.ErrorMessage;
-                }
+                aseguradora.Usuario = new ML.Usuario();
+                ML.Usuario usuario = new ML.Usuario(); 
+                ML.Result resultUsuario = BL.Usuario.GetAll(usuario); 
+                aseguradora.Usuario.Usuarios = resultUsuario.Objects;
+
+                return View(aseguradora);
             }
 
             return PartialView("ValidationModal");
@@ -104,7 +122,13 @@ namespace PL.Controllers
             return PartialView("ValidationModal");
         }
 
-        //Método para convertir imagen 
+        public static byte[] ConvertToBytes(IFormFile Imagen)
+        {
+            using var fileStream = Imagen.OpenReadStream();
+            byte[] bytes = new byte[fileStream.Length];
+            fileStream.Read(bytes, 0, (int)fileStream.Length);
+            return bytes;
+        }
 
     }
 }

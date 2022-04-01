@@ -10,9 +10,9 @@ namespace PL.Controllers
         {
             ML.Usuario usuario = new ML.Usuario();
 
-            usuario.Nombre = (usuario.Nombre == null) ? " " : usuario.Nombre; //Operador ternario
-            usuario.ApellidoPaterno = (usuario.ApellidoPaterno == null) ? " " : usuario.ApellidoPaterno;
-            usuario.ApellidoMaterno = (usuario.ApellidoMaterno == null) ? " " : usuario.ApellidoMaterno;
+            usuario.Nombre = (usuario.Nombre == null) ? "" : usuario.Nombre; //Operador ternario
+            usuario.ApellidoPaterno = (usuario.ApellidoPaterno == null) ? "" : usuario.ApellidoPaterno;
+            usuario.ApellidoMaterno = (usuario.ApellidoMaterno == null) ? "" : usuario.ApellidoMaterno;
 
             ML.Result result = BL.Usuario.GetAll(usuario); 
             usuario = new ML.Usuario();
@@ -28,9 +28,9 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult GetAll(ML.Usuario usuario)
         {
-            usuario.Nombre = (usuario.Nombre == null) ? " " : usuario.Nombre; //Operador ternario
-            usuario.ApellidoPaterno = (usuario.ApellidoPaterno == null) ? " " : usuario.ApellidoPaterno;
-            usuario.ApellidoMaterno = (usuario.ApellidoMaterno == null) ? " " : usuario.ApellidoMaterno;
+            usuario.Nombre = (usuario.Nombre == null) ? "" : usuario.Nombre; //Operador ternario
+            usuario.ApellidoPaterno = (usuario.ApellidoPaterno == null) ? "" : usuario.ApellidoPaterno;
+            usuario.ApellidoMaterno = (usuario.ApellidoMaterno == null) ? "" : usuario.ApellidoMaterno;
 
             ML.Result result = BL.Usuario.GetAll(usuario);
             usuario = new ML.Usuario();
@@ -104,43 +104,50 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult Form(ML.Direccion direccion)
         {
-            if(ModelState.IsValid)
-            {            
-            //HttpPostedFileBase file = Request.Files["fuImagen"];
-            //if (file.ContentLength > 0)
-            //{
-            //    direccion.Usuario.Imagen = ConvertToBytes(file);
-            //}
-
-            if (direccion.Usuario.IdUsuario == 0)
+            if (ModelState.IsValid == false)
             {
-                ML.Result result = BL.Usuario.Add(direccion.Usuario);
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                IFormFile Imagen = Request.Form.Files["fuImagen"];
 
-                if (result.Correct)
+                if (Imagen != null)
+                {                   
+                    byte[] imageArray = ConvertToBytes(Imagen);
+                    direccion.Usuario.Imagen = Convert.ToBase64String(imageArray);
+                }
+
+                if (direccion.Usuario.IdUsuario == 0)
                 {
-                    direccion.Usuario.IdUsuario = ((int)result.Object);
-                    ML.Result resultDireccion = BL.Direccion.Add(direccion);
+                    ML.Result result = BL.Usuario.Add(direccion.Usuario); //Cambio
 
-
-                    if (resultDireccion.Correct)
+                    if (result.Correct)
                     {
-                        ViewBag.Message = "Usuario ingresado correctamente!!!";
+                        //ML.Result LastIdUsuario = BL.Usuario.GetLastId();
+                        //ML.Direccion direccion2 = ((ML.Direccion)LastIdUsuario.Object);
+                        //int IdUsuarioItem = direccion2.Usuario.IdUsuario;
+                        //direccion.Usuario.IdUsuario = IdUsuarioItem;
+
+                        direccion.Usuario.IdUsuario = ((int)result.Object);
+                        ML.Result resultDireccion = BL.Direccion.Add(direccion);
+
+                        if (resultDireccion.Correct)
+                        {
+                            ViewBag.Message = "Usuario ingresado correctamente!!!";
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Ocurrió un error al insertar el usuario: " + resultDireccion.ErrorMessage;
+                        }
                     }
                     else
                     {
-                        ViewBag.Message = "Ocurrió un error al insertar el usuario: " + resultDireccion.ErrorMessage;
+                        ViewBag.Message = "Ocurrió un error al insertar el usuario: " + result.ErrorMessage;
                     }
                 }
-                else
-                {
-                    ViewBag.Message = "Ocurrió un error al insertar el usuario: " + result.ErrorMessage;
-                }
-            }
 
             else
             {
                 ML.Result result = BL.Usuario.Update(direccion.Usuario);
-
+                    
                 if (result.Correct)
                 {
                     ML.Result resultDireccion = BL.Direccion.Update(direccion);
@@ -160,6 +167,7 @@ namespace PL.Controllers
             }
 
             return PartialView("ValidationModal");
+
             }
             else
             {
@@ -226,7 +234,7 @@ namespace PL.Controllers
 
                 //usuario.Estatus = (Convert.ToByte(usuario.Estatus == 1)) ? 0 : 1;
 
-                if(usuario.Estatus == 0)
+                if (usuario.Estatus == 0)
                 {
                     usuario.Estatus = 1;
                 }
@@ -246,8 +254,6 @@ namespace PL.Controllers
             return PartialView("ValidationModal");
         }
 
-
-
         public JsonResult GetEstado(int IdPais)
         {
             var result = BL.Estado.EstadoGetByIdPais(IdPais);
@@ -264,15 +270,13 @@ namespace PL.Controllers
             return Json(result.Objects);
         }
 
-        //public byte[] ConvertToBytes(HttpPostedFileBase Imagen)
-        //{
-        //    byte[] data = null;
-        //    System.IO.BinaryReader reader = new System.IO.BinaryReader(Imagen.InputStream);
-        //    data = reader.ReadBytes((int)Imagen.ContentLength);
-
-        //    return data;
-        //}
-
+        public static byte[] ConvertToBytes(IFormFile Imagen)
+        {
+            using var fileStream = Imagen.OpenReadStream();
+            byte[] bytes = new byte[fileStream.Length];
+            fileStream.Read(bytes, 0, (int)fileStream.Length);
+            return bytes;
+        }
 
     }
 }
