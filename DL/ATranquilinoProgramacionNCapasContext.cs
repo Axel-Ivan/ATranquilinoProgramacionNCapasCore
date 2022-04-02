@@ -22,6 +22,7 @@ namespace DL
         public virtual DbSet<DependienteTipo> DependienteTipos { get; set; } = null!;
         public virtual DbSet<Direccion> Direccions { get; set; } = null!;
         public virtual DbSet<Empleado> Empleados { get; set; } = null!;
+        public virtual DbSet<EmpleadoDependiente> EmpleadoDependientes { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
         public virtual DbSet<Estado> Estados { get; set; } = null!;
         public virtual DbSet<Municipio> Municipios { get; set; } = null!;
@@ -243,6 +244,26 @@ namespace DL
                     .HasForeignKey(d => d.IdPoliza)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Empleado__IdPoli__498EEC8D");
+            });
+
+            modelBuilder.Entity<EmpleadoDependiente>(entity =>
+            {
+                entity.HasKey(e => e.IdEmpleadoDependiente)
+                    .HasName("PK__Empleado__1AE6F22BB1310F80");
+
+                entity.ToTable("EmpleadoDependiente");
+
+                entity.HasOne(d => d.IdDependienteNavigation)
+                    .WithMany(p => p.EmpleadoDependientes)
+                    .HasForeignKey(d => d.IdDependiente)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__EmpleadoD__IdDep__70A8B9AE");
+
+                entity.HasOne(d => d.IdEmpleadoNavigation)
+                    .WithMany(p => p.EmpleadoDependientes)
+                    .HasForeignKey(d => d.IdEmpleado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__EmpleadoD__IdEmp__6FB49575");
             });
 
             modelBuilder.Entity<Empresa>(entity =>

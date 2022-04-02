@@ -5,6 +5,11 @@ namespace DL
 {
     public partial class Dependiente
     {
+        public Dependiente()
+        {
+            EmpleadoDependientes = new HashSet<EmpleadoDependiente>();
+        }
+
         public int IdDependiente { get; set; }
         public int IdEmpleado { get; set; }
         public string? Nombre { get; set; }
@@ -19,6 +24,7 @@ namespace DL
 
         public virtual DependienteTipo IdDependienteTipoNavigation { get; set; } = null!;
         public virtual Empleado IdEmpleadoNavigation { get; set; } = null!;
+        public virtual ICollection<EmpleadoDependiente> EmpleadoDependientes { get; set; }
 
         public string DependienteTipoNombre { get; set; } = null;
     }

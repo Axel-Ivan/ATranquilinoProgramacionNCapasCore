@@ -8,6 +8,7 @@ namespace DL
         public Empleado()
         {
             Dependientes = new HashSet<Dependiente>();
+            EmpleadoDependientes = new HashSet<EmpleadoDependiente>();
         }
 
         public int IdEmpleado { get; set; }
@@ -27,6 +28,7 @@ namespace DL
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
         public virtual Poliza IdPolizaNavigation { get; set; } = null!;
         public virtual ICollection<Dependiente> Dependientes { get; set; }
+        public virtual ICollection<EmpleadoDependiente> EmpleadoDependientes { get; set; }
 
         public string EmpresaNombre { get; set; } = null;
         public string PolizaNombre { get; set; } = null;

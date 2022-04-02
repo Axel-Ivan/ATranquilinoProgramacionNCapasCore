@@ -47,6 +47,5 @@ namespace DL
         public string? EstadoNombre { get; set; } = null;
         public int? IdPais { get; set; }
         public string? PaisNombre { get; set; } = null;
-
     }
 }

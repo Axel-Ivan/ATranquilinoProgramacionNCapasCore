@@ -2,7 +2,7 @@
 
 namespace PL.Controllers
 {
-    public class DependienteController : Controller
+    public class EmpleadoDependienteController : Controller
     {
         [HttpGet]
         public ActionResult GetAll(int IdEmpleado)
