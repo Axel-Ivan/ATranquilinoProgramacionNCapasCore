@@ -1,0 +1,158 @@
+﻿@model ML.EmpleadoDependiente
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Añadir Dependiente</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="text-left">Llene los campos con la información del dependiente que desea registrar de acuerdo a lo que se indica.</h5>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "EmpleadoDependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-md-12" >
+                        <div class = "form-group" style = "display: none;">                      
+                            @Html.LabelFor(model => model.Dependiente.IdDependiente, new { @class = "hidden" })
+                            @Html.TextBoxFor(model => model.Dependiente.IdDependiente, new { @class = "hidden from-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.Nombre)
+                        @Html.TextBoxFor(model => model.Dependiente.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.Nombre)
+                        <label id="lblErrorNombre"></label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.ApellidoPaterno)
+                        @Html.TextBoxFor(model => model.Dependiente.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoPaterno')", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.ApellidoPaterno)
+                        <label id="lblErrorApellidoPaterno"></label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.ApellidoMaterno)
+                        @Html.TextBoxFor(model => model.Dependiente.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(event, 'lblErrorApellidoMaterno')", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.ApellidoMaterno)
+                        <label id="lblErrorApellidoMaterno"></label>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.FechaNacimiento)
+                        @Html.TextBoxFor(model => model.Dependiente.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.FechaNacimiento)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.EstadoCivil)
+                        @Html.TextBoxFor(model => model.Dependiente.EstadoCivil, new { @class = "form-control", @id = "txtEstadoCivil", @onkeypress = "return SoloLetras(event, 'lblErrorEstadoCivil')", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.EstadoCivil)
+                        <label id="lblErrorEstadoCivil"></label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.Genero)
+                        @Html.TextBoxFor(model => model.Dependiente.Genero, new { @class = "form-control", @id = "txtGenero", @onkeypress = "return SoloLetras(event, 'lblGenero')", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.Genero)
+                        <label id="lblErrorGenero"></label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" >
+                        <div class = "form-group" style = "display: none;">                      
+                            @Html.LabelFor(model => model.Dependiente.DependienteTipo.IdDependienteTipo, new { @class = "hidden" })
+                            @Html.TextBoxFor(model => model.Dependiente.DependienteTipo.IdDependienteTipo, new { @class = "hidden from-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.Telefono)
+                        @Html.TextBoxFor(model => model.Dependiente.Telefono, new { @class = "form-control", @id = "txtTelefono", @onkeypress = "return SoloNumeros(event, 'lblTelefono')", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.Telefono)
+                        <label id="lblErrorTelefono"></label>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.RFC)
+                        @Html.TextBoxFor(model => model.Dependiente.RFC, new { @class = "form-control", @id = "txtRFC", @autocomplete = "off" })                           
+                        @Html.ValidationMessageFor(model => model.Dependiente.RFC)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.Dependiente.DependienteTipo)
+                        @Html.DropDownListFor(model => model.Dependiente.DependienteTipo.IdDependienteTipo, new SelectList(Model.Dependiente.DependienteTipo.DependientesTipo, "IdDependienteTipo", "Nombre"), "Selecciona el tipo de dependiente", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Dependiente.DependienteTipo)
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-1">
+                        <input type="submit" value="Guardar" class="btn btn-success">
+                    </div>
+                    <div class="col-md-1">
+                        @Html.ActionLink("Regresar", "EmpleadoGetAll", "EmpleadoDependiente", htmlAttributes: new { @class = "btn btn-danger" } )
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+<script>
+
+    function SoloNumeros(e, controlId){
+
+        var numero = e.onkeypress.arguments[0].key;
+        if(!/[^0-9]/.test(numero))
+        {
+            $("#" + controlId).html('');
+            return true;
+        }
+        else
+        {
+            $("#" + controlId).html('Solo se aceptan números');
+            return false;
+        }
+    }
+
+    function SoloLetras(e, controlId){
+
+        var caracter = e.onkeypress.arguments[0].key;
+
+        if(!/[^a-zA-Z/\s/]/.test(caracter))
+        {
+            $("#" + controlId).html('');         
+            return true;
+        }
+        else
+        {
+            $("#" + controlId).html('Solo se aceptan letras');
+            return false;
+        }
+    }
+
+</script>

@@ -9,6 +9,25 @@ namespace BL
 {
     public class Dependiente
     {
+        public static ML.Result Add(ML.EmpleadoDependiente empleadoDependiente)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
         public static ML.Result GetAllByIdEmpleado(int IdEmpleado)
         {
             ML.Result result = new ML.Result();
@@ -49,6 +68,34 @@ namespace BL
                         result.Correct = false;
                     }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public static ML.Result Delete(int IdDependiente)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+                    var procedure = context.Database.ExecuteSqlRaw($"DependienteDelete {IdDependiente}");
+                    
+                    if(procedure >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
                 }
             }
             catch (Exception ex)

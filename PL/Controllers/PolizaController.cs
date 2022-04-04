@@ -6,6 +6,8 @@ namespace PL.Controllers
     {
         public ActionResult GetAll()
         {
+            ML.Poliza poliza = new ML.Poliza();
+
             return View();
         }
     }

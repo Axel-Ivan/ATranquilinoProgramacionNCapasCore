@@ -49,7 +49,6 @@
                     <thead>
                         <tr class="text-center">
                             <td>Editar</td>
-                            <td>Asignar</td>
                             <td class = "form-group" style = "display: none;">IdEmpleado</td>
                             <td>Nombre Completo</td>
                             <td>RFC</td>
@@ -70,7 +69,7 @@
                     {
                         <tr class="text-center">
                             <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Empleado", new { IdEmpleado = empleado.IdEmpleado })"></a></td>
-                            <td><a class="btn btn-primary glyphicon glyphicon-edit" href="@Url.Action("GetAll", "EmpleadoDependiente", new { IdEmpleado = empleado.IdEmpleado })"></a></td>
+                            @*<td><a class="btn btn-primary glyphicon glyphicon-edit" href="@Url.Action("GetAll", "EmpleadoDependiente", new { IdEmpleado = empleado.IdEmpleado })"></a></td>*@
                             <td class = "form-group" style = "display: none;">@empleado.IdEmpleado</td>
                             <td>@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno</td>
                             <td>@empleado.RFC</td>

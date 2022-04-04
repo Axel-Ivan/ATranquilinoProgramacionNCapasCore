@@ -22,12 +22,9 @@ namespace PL.Controllers
         public ActionResult Form(int? IdEmpresa)
         {
             ML.Empresa empresa = new ML.Empresa();
-            ML.Result resultEmpresas = BL.Empresa.GetAll(); //Here
-            empresa.Empresas = resultEmpresas.Objects;
 
             if (IdEmpresa == null)
             {
-                empresa.Empresas = resultEmpresas.Objects;
                 return View(empresa);
             }
             else
@@ -38,7 +35,6 @@ namespace PL.Controllers
                 if (result.Correct)
                 {
                     empresa = ((ML.Empresa)result.Object);
-                    empresa.Empresas = resultEmpresas.Objects;
                     return View(empresa);
                 }
             }
@@ -92,8 +88,6 @@ namespace PL.Controllers
             {
                 return View(empresa);
             }
-
-            return PartialView("ValidationModal");
         }
 
         [HttpGet]
