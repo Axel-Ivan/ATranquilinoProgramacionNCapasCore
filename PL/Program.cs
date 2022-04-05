@@ -14,6 +14,17 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache(); //Agregada
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+}); //Agregada
+
+IServiceCollection serviceCollection = builder.Services.AddHttpContextAccessor(); //Agregada
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +41,8 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession(); //Agregada
 
 app.UseRouting();
 

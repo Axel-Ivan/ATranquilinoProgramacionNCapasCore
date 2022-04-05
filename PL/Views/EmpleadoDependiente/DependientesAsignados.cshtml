@@ -28,6 +28,28 @@
     {
         <div class = "row">
             <div class = "col-md-12">
+                <h4>Empleado</h4>
+                <hr />
+            </div>
+        </div>
+        <div class = "row">
+            <div class = "col-md-4">
+                @Html.LabelFor(model => model.Empleado.Nombre)
+                @Html.TextBoxFor(model => model.Empleado.Nombre, new { @class = "form-control", disabled = "true" }) 
+            </div>
+            <div class = "col-md-4">
+                @Html.LabelFor(model => model.Empleado.ApellidoPaterno)
+                @Html.TextBoxFor(model => model.Empleado.ApellidoPaterno, new { @class = "form-control", disabled = "true" }) 
+            </div>
+            <div class = "col-md-4">
+                @Html.LabelFor(model => model.Empleado.ApellidoPaterno)
+                @Html.TextBoxFor(model => model.Empleado.ApellidoPaterno, new { @class = "form-control", disabled = "true" }) 
+            </div>
+        </div>
+        <br/>
+
+        <div class = "row">
+            <div class = "col-md-12">
                 <table class = "table table-bordered table-responsive">
                     <thead>
                         <tr class = "text-center">

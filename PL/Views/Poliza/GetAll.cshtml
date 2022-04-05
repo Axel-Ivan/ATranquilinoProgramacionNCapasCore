@@ -1,0 +1,80 @@
+﻿@model ML.Poliza
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Polizas</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione el boton de "Agregar" para añadir una poliza, el boton de amarillo para actualizarla, y el boton rojo para eliminarla</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="text-right">@Html.ActionLink("+", "Form", "Poliza", htmlAttributes: new { @class = "btn btn-success" })</p>
+        </div>
+    </div>
+    <br/>
+
+    @if(Model.Polizas.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Editar</td>
+                            <td class = "form-group" style = "display: none;">IdPoliza</td>
+                            <td>Nombre</td>
+                            <td class = "form-group" style = "display: none;">IdSubPoliza</td>
+                            <td>SubPoliza</td>
+                            <td>Número de Poliza</td>
+                            <td>Fecha de Creación</td>
+                            <td>Fecha de Modificación</td>
+                            <td class = "form-group" style = "display: none;">Idusuario</td>
+                            <td>Usuario Contratista</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(ML.Poliza poliza in Model.Polizas)
+                        {
+                            <tr class="text-center">
+                                <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Poliza", new { IdPoliza = poliza.IdPoliza })"></a></td>
+                                <td class = "form-group" style = "display: none;">@poliza.IdPoliza</td>                                
+                                <td>@poliza.Nombre</td>
+                                <td class = "form-group" style = "display: none;">@poliza.SubPoliza.IdSubPoliza</td> 
+                                <td>@poliza.SubPoliza.Nombre</td>
+                                <td>@poliza.NumeroPoliza</td>
+                                <td>@poliza.FechaCreacion</td>
+                                <td>@poliza.FechaModificacion</td>
+                                <td class = "form-group" style = "display: none;">@poliza.Usuario.IdUsuario</td>
+                                <td>@poliza.Usuario.Nombre</td>
+                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Poliza", new { IdPoliza = poliza.IdPoliza })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de poliza!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+

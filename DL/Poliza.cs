@@ -21,5 +21,8 @@ namespace DL
         public virtual SubPoliza IdSubPolizaNavigation { get; set; } = null!;
         public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
         public virtual ICollection<Empleado> Empleados { get; set; }
+
+        public string SubPolizaNombre { get; set; } = null;
+        public string UsuarioNombre { get; set; } = null;
     }
 }

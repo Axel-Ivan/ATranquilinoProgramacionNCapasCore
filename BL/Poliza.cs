@@ -30,6 +30,7 @@ namespace BL
                             poliza.Nombre = obj.Nombre;
                             poliza.SubPoliza = new ML.SubPoliza();
                             poliza.SubPoliza.IdSubPoliza = obj.IdSubPoliza;
+                            poliza.SubPoliza.Nombre = obj.SubPolizaNombre;
                             poliza.NumeroPoliza = obj.NumeroPoliza;
                             poliza.FechaCreacion = Convert.ToString(obj.FechaCreacion);
                             poliza.FechaCreacion = poliza.FechaCreacion.Remove(10, 15);
@@ -37,6 +38,7 @@ namespace BL
                             poliza.FechaModificacion = poliza.FechaModificacion.Remove(10, 15);
                             poliza.Usuario = new ML.Usuario();
                             poliza.Usuario.IdUsuario = obj.IdUsuario;
+                            poliza.Usuario.Nombre = obj.UsuarioNombre;
 
                             result.Objects.Add(poliza);
                         }
