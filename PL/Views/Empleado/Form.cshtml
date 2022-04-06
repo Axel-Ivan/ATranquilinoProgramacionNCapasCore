@@ -31,24 +31,30 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4">                      
                         @Html.LabelFor(model => model.Nombre)
-                        @*<div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">@@</span>*@
-                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(this, 'lblErrorNombre')", @autocomplete = "off" })
-                            @*</div>*@
-                            @Html.ValidationMessageFor(model => model.Nombre)
-                            <label class="alert-danger" id="lblErrorNombre"></label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-emoji-smile-fill"></i></span>                           
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(this, 'lblErrorNombre')", @autocomplete = "off" })                        
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                        <label class="alert-danger" id="lblErrorNombre"></label>
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.ApellidoPaterno)
-                        @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoPaterno')", @autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-bounding-box"></i></span>
+                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoPaterno')", @autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.ApellidoPaterno)
                         <label class="alert-danger" id="lblErrorApellidoPaterno"></label>
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.ApellidoMaterno)
-                        @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoMaterno')", @autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-bounding-box"></i></span>
+                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno", @onkeypress = "return SoloLetras(this, 'lblErrorApellidoMaterno')", @autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.ApellidoMaterno)
                         <label class="alert-danger" id="lblErrorApellidoMaterno"></label>
                     </div>
@@ -62,12 +68,18 @@
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Email)
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail", @onblur = "return ValidarEmail()", @autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtEmail", @onblur = "return ValidarEmail()", @autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.Email)
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Telefono)
-                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono", @onkeypress = "return SoloNumeros(this, 'lblErrorTelefono')", @autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone"></i></span>
+                                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono", @onkeypress = "return SoloNumeros(this, 'lblErrorTelefono')", @autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.Telefono)
                          <label class="alert-danger" id="lblErrorTelefono"></label>
                     </div>

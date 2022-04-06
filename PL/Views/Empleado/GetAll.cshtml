@@ -26,11 +26,38 @@
                 @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona una Empresa", new { @class = "form-control" })
             </div>
             <div class="col-md-4"> 
-                <input type="submit" value="Buscar" class="btn btn-primary" formmethod="post"> @* La clase float-end mueve a la derecha el elemento *@
+                <input type="submit" value="Buscar" class="btn btn-primary" formmethod="post"> 
             </div>
         </div> 
         <br />
+        }       
+    </div>
 
+    <div class = "align-content-center">
+        @using(Html.BeginForm("CargaMasiva", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class = "col-md-4">
+                    <input type="file" name="Archivo" onchange="readURL(this);" />
+                </div>        
+                <div class = "col-md-4">
+                    <input type="submit" value="Cargar" class="btn btn-primary" formmethod="post">
+                </div>
+            </div>
+            <br />
+        }
+    </div>
+
+    <div class = "align-content-center">
+        @using(Html.BeginForm("Download", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            
+            <div class="row">
+                <div class = "col-md-4">
+                    <input type="submit" value="Descargar" class="btn btn-dark" formmethod="post">
+                </div>
+            </div>
+            <br />
         }
     </div>
 

@@ -9,10 +9,10 @@ namespace PL.Controllers
     public class EmpleadoDependienteController : Controller
     {
 
-        //const string SessionId = "IdEmpleado";
-        //const string SessionName = "Nombre";
-        //const string SessionApellidoPaterno = "ApellidoPaterno";
-        //const string SessionApellidoMaterno = "ApellidoMaterno";
+        string SessionId = "IdEmpleado";
+        string SessionName = "Nombre";
+        string SessionApellidoPaterno = "ApellidoPaterno";
+        string SessionApellidoMaterno = "ApellidoMaterno";
 
         [HttpGet]
         public ActionResult EmpleadoGetAll()
@@ -54,12 +54,12 @@ namespace PL.Controllers
             //string SessionApellidoPaterno = empleado.ApellidoPaterno;
             //string SessionApellidoMaterno = empleado.ApellidoMaterno;
 
-            ML.Empleado empleadoItem = new ML.Empleado();
+            //ML.Empleado empleadoItem = new ML.Empleado();
 
-            HttpContext.Session.SetInt32("SessionId", empleado.IdEmpleado); //Asignamos valores a la sesion
-            HttpContext.Session.SetString("SessionName", empleado.Nombre);
-            HttpContext.Session.SetString("SessionApellidoPaterno", empleado.ApellidoPaterno);
-            HttpContext.Session.SetString("SessionApellidoMaterno", empleado.ApellidoMaterno);
+            HttpContext.Session.SetInt32(SessionId, empleado.IdEmpleado); //Asignamos valores a la sesion
+            HttpContext.Session.SetString(SessionName, empleado.Nombre);
+            HttpContext.Session.SetString(SessionApellidoPaterno, empleado.ApellidoPaterno);
+            HttpContext.Session.SetString(SessionApellidoMaterno, empleado.ApellidoMaterno);
 
 
 
@@ -77,10 +77,10 @@ namespace PL.Controllers
                 //    empleadoDependiente.Empleado.ApellidoMaterno = empleado.ApellidoMaterno;
                 //}
 
-                empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32("SessionId")); //Guardamos los valores
-                empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString("SessionName");
-                empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString("SessionApellidoPaterno");
-                empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString("SessionApellidoMaterno");
+                empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(SessionId)); //Guardamos los valores
+                empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString(SessionName);
+                empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString(SessionApellidoPaterno);
+                empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString(SessionApellidoMaterno);
             }
 
             return View(empleadoDependiente);
@@ -105,10 +105,10 @@ namespace PL.Controllers
             //    empleadoDependiente.Empleado.ApellidoMaterno = empleado.ApellidoMaterno;
             //}
 
-            empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32("SessionId"));
-            empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString("SessionName");
-            empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString("SessionApellidoPaterno");
-            empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString("SessionApellidoMaterno");
+            empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(SessionId));
+            empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString(SessionName);
+            empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString(SessionApellidoPaterno);
+            empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString(SessionApellidoMaterno);
 
 
             return View(empleadoDependiente);

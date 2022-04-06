@@ -31,13 +31,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         @Html.LabelFor(model => model.Nombre)
-                       <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">@@</span>
+                       <div class="input-group w-50">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-alarm"></i></span>
                             @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
                             </div>
                             @Html.ValidationMessageFor(model => model.Nombre)
+
                             <label id="lblErrorNombre"></label>
                         </div>
                 </div>
