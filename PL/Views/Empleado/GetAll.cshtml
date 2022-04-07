@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 } 
 
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http;
+
 <div class="container">
     <div class="row">
         <div class="col-xl-12">
@@ -48,18 +51,21 @@
         }
     </div>
 
-    <div class = "align-content-center">
+    @if(HttpContextAccessor.HttpContext.Session.GetInt32("EstadoError") == 1)
+    {
+        <div class = "align-content-center">
         @using(Html.BeginForm("Download", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             
             <div class="row">
-                <div class = "col-md-4">
+                <div class = "col-md-4">                                    
                     <input type="submit" value="Descargar" class="btn btn-dark" formmethod="post">
                 </div>
             </div>
             <br />
         }
-    </div>
+        </div>
+    }
 
     <div class="row">
         <div class="col-xl-12">
@@ -138,6 +144,12 @@
     }
    
 </div>
+
+@inject IHttpContextAccessor HttpContextAccessor
+<script>
+   var isError = '@HttpContextAccessor.HttpContext.Session.GetInt32("SessionId")';
+   //alert(isFiltered);
+</script>
 
 <script src="../../Scripts/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="../../Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>

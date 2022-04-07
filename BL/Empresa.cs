@@ -167,5 +167,47 @@ namespace BL
 
             return result;
         }
+
+        //public static ML.Result ConvertToDataTable(string strFilePath, string connString)
+        //{
+        //    ML.Result result = new ML.Result();
+
+        //    try
+        //    {
+        //        using(OleDbConnection context = new OleDbConnection(connString))
+        //        {
+        //            string query = "SELECT * FROM [Hoja1$]";
+        //            using(OleDbCommand cmd = new OleDbCommand())
+        //            {
+        //                cmd.CommandText = query;
+        //                cmd.Connection = context;
+
+        //                OleDbDataAdapter da = new OleDbDataAdapter();
+        //                da.SelectCommand = cmd;
+        //                DataTable tableEmpresa = new DataTable();
+
+        //                da.Fill(tableEmpresa);
+
+        //                if(tableEmpresa.Rows.Count > 1)
+        //                {
+        //                    result.Correct = true;
+        //                }
+        //                else
+        //                {
+        //                    result.Correct = false;
+        //                    result.ErrorMessage = "No existen registros en el documento";
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Correct = false;
+        //        result.ErrorMessage = ex.Message;
+        //    }
+
+        //    return result;
+        //}
+
     }
 }

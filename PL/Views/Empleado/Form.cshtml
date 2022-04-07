@@ -63,7 +63,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.RFC)
-                        @Html.TextBoxFor(model => model.RFC, new { @class = "form-control", @id = "txtRFC", @autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-watch"></i></span>
+                                @Html.TextBoxFor(model => model.RFC, new { @class = "form-control", @id = "txtRFC", @autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.RFC)
                     </div>
                     <div class="col-md-4">
@@ -98,7 +101,10 @@
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.NSS)
-                        @Html.TextBoxFor(model => model.NSS, new { @class = "form-control", autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-wallet-fill"></i></span>
+                                @Html.TextBoxFor(model => model.NSS, new { @class = "form-control", autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.NSS) 
                     </div>
                 </div>

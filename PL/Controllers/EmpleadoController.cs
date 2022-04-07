@@ -20,6 +20,7 @@ namespace PL.Controllers
                 empleado.Empresa.Empresas = resultEmpresas.Objects;
                 empleado.Empleados = resultEmpleados.Objects;               
             }
+
             return View(empleado);
         }
 
@@ -204,7 +205,7 @@ namespace PL.Controllers
                         + "Puede haber un error en el Id de la Poliza: " + empleado.Poliza.IdPoliza + ", "
                         + "El error general fue:" + result.ErrorMessage);
                     }
-
+                    HttpContext.Session.SetInt32("EstadoError", 0);
                 }
 
                 if (resultErrores != null)
@@ -216,6 +217,8 @@ namespace PL.Controllers
                     }
                     textError.Close();
 
+                    HttpContext.Session.SetInt32("EstadoError", 1);
+                    //empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(SessionId));
                 }
             }
 

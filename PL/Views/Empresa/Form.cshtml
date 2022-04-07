@@ -32,18 +32,27 @@
                 <div class="row">
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Nombre)
-                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-pc-display-horizontal"></i></span>
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.Nombre)
                         <label id="lblErrorNombre"></label>
                     </div>
                     <div class="col-md-4">
                         @Html.LabelFor(model => model.Telefono)
-                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone"></i></span>
+                                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.Telefono)
                     </div>
                     <div class="col-md-4"> 
                         @Html.LabelFor(model => model.Email)
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", autocomplete = "off" })
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", autocomplete = "off" })
+                        </div>
                         @Html.ValidationMessageFor(model => model.Email)
                     </div>
                 </div>
