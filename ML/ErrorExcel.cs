@@ -8,6 +8,7 @@ namespace ML
 {
     public class ErrorExcel
     {
-
+        public int IdErrorExcel { get; set; }
+        public string Message { get; set; }
     }
 }

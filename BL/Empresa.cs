@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -168,46 +170,69 @@ namespace BL
             return result;
         }
 
-        //public static ML.Result ConvertToDataTable(string strFilePath, string connString)
-        //{
-        //    ML.Result result = new ML.Result();
+        public static ML.Result GetAllByExcel(string connectionString)
+        {
+            ML.Result result = new ML.Result();
 
-        //    try
-        //    {
-        //        using(OleDbConnection context = new OleDbConnection(connString))
-        //        {
-        //            string query = "SELECT * FROM [Hoja1$]";
-        //            using(OleDbCommand cmd = new OleDbCommand())
-        //            {
-        //                cmd.CommandText = query;
-        //                cmd.Connection = context;
+            try
+            {
+                using (OleDbConnection context = new OleDbConnection(connectionString))
+                {
+                    string query = "SELECT * FROM [Sheet1$]";
+                    using (OleDbCommand cmd = new OleDbCommand())
+                    {
+                        cmd.Connection = context;
+                        cmd.CommandText = query;
+                        cmd.Connection.Open();
 
-        //                OleDbDataAdapter da = new OleDbDataAdapter();
-        //                da.SelectCommand = cmd;
-        //                DataTable tableEmpresa = new DataTable();
+                        OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                        DataTable tableEmpresa = new DataTable();
+                        da.SelectCommand = cmd;
+                        
+                        da.Fill(tableEmpresa);
 
-        //                da.Fill(tableEmpresa);
+                        if (tableEmpresa.Rows.Count > 0)
+                        {
+                            result.Objects = new List<object>();
+                            foreach(DataRow row in tableEmpresa.Rows)
+                            {
+                                ML.Empresa empresa = new ML.Empresa();
+                                empresa.Nombre = row[0].ToString();
+                                empresa.Telefono = row[1].ToString();
+                                empresa.Email = row[2].ToString();
+                                empresa.DireccionWeb = row[3].ToString();
+                                result.Objects.Add(empresa);
+                            }
+                            result.Correct = true;
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                            result.ErrorMessage = "No existen registros en el documento";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
 
-        //                if(tableEmpresa.Rows.Count > 1)
-        //                {
-        //                    result.Correct = true;
-        //                }
-        //                else
-        //                {
-        //                    result.Correct = false;
-        //                    result.ErrorMessage = "No existen registros en el documento";
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Correct = false;
-        //        result.ErrorMessage = ex.Message;
-        //    }
+            return result;
+        }
+        public static ML.Result Validacion(List<object> Object)
+        {
+            ML.Result result = new ML.Result();
 
-        //    return result;
-        //}
+            result.Objects = new List<object>();
+            string ErrorMensaje;
+
+
+            return result;
+        }
+
+
 
     }
 }

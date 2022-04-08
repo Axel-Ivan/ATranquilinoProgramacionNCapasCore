@@ -51,7 +51,7 @@
                         @Html.LabelFor(model => model.NumeroPoliza)
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-pc-display-horizontal"></i></span>
-                                @Html.TextBoxFor(model => model.NumeroPoliza, new { @class = "form-control", @id = "txtNumeroPoliza", @onkeypress = "return SoloLetras(event, 'lblErrorNumeroPoliza')", @autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.NumeroPoliza, new { @class = "form-control", @id = "txtNumeroPoliza", @onkeypress = "return SoloNumeros(this, 'lblErrorNumeroPoliza')", @autocomplete = "off" })
                         </div>
                         @Html.ValidationMessageFor(model => model.NumeroPoliza)
                         <label id="lblErrorNumeroPoliza"></label>
@@ -114,6 +114,20 @@
         }
     }
 
+    function SoloNumeros(e, controlId){
+
+        var numero = e.onkeypress.arguments[0].key;
+        if(!/[^0-9]/.test(numero))
+        {
+            $("#" + controlId).html('');
+            return true;
+        }
+        else
+        {
+            $("#" + controlId).html('Solo se aceptan números');
+            return false;
+        }
+    }
 
     function SoloLetras(e, controlId){
         //var letra = e.onkeypress.arguments[0].key;
