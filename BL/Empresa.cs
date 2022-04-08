@@ -226,8 +226,24 @@ namespace BL
             ML.Result result = new ML.Result();
 
             result.Objects = new List<object>();
-            string ErrorMensaje;
+            string mensajeError;
+            int contador = 2;
+            foreach(ML.Empresa empresa in Object)
+            {
+                mensajeError = "";
+                mensajeError += (empresa.Nombre == "") ? "Falta el nombre" : "";
+                mensajeError += (empresa.Telefono == "") ? "Falta el telefono" : "";
+                mensajeError += (empresa.Email == "") ? "Falta el email" : "";
+                mensajeError += (empresa.DireccionWeb == "") ? "Falta la direccion web" : "";
 
+                if(mensajeError != "")
+                {
+                    ML.ErrorExcel error = new ML.ErrorExcel();
+                    error.IdErrorExcel = contador;
+                    error.Message = mensajeError;
+                    result.Objects.Add(error);
+                }
+            }
 
             return result;
         }

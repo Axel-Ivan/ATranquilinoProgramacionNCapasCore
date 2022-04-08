@@ -58,8 +58,33 @@ namespace PL.Controllers
                             {
                                 file.CopyTo(stream); //Revisar
                             }
+
                             string connectionString = _configuration["ConnectionStringExcel:value"] + path;
                             ML.Result resultEmpresas = BL.Empresa.GetAllByExcel(connectionString);
+
+                            if(resultEmpresas.Correct)
+                            {
+                                ML.Result resultValidacion = BL.Empresa.Validacion(resultEmpresas.Objects);
+                                if(resultValidacion.Objects.Count == 0)
+                                {
+                                    resultValidacion.Correct = true;
+                                }
+                                //else
+                                //{
+                                //    resultValidacion.Correct = false;
+                                //    ViewBag.Message = "";
+                                //}
+
+                                ML.Result result = BL.Empresa.GetAll();
+                                empresa.Empresas = new List<object>();
+                                empresa.Empresas = result.Objects;
+
+                                return View(empresa);
+                            }
+                            else
+                            {
+                                ViewBag.Message = "El excel no contiene registros";
+                            }
                         }
 
                     }
@@ -70,7 +95,7 @@ namespace PL.Controllers
                 }
             }
 
-            return View();
+            return PartialView("ValidationModal");
         }
 
         //public ActionResult CargaMasiva (ML.ErrorExcel errorItem)

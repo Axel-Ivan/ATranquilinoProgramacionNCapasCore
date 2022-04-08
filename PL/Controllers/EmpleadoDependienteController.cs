@@ -8,12 +8,6 @@ namespace PL.Controllers
 {
     public class EmpleadoDependienteController : Controller
     {
-
-        string SessionId = "IdEmpleado";
-        string SessionName = "Nombre";
-        string SessionApellidoPaterno = "ApellidoPaterno";
-        string SessionApellidoMaterno = "ApellidoMaterno";
-
         [HttpGet]
         public ActionResult EmpleadoGetAll()
         {
@@ -40,47 +34,24 @@ namespace PL.Controllers
             empleadoDependiente.Dependiente.DependienteTipo = new ML.DependienteTipo();
             ML.Result resultDependientes = BL.Dependiente.GetAllByIdEmpleado(IdEmpleado);
 
-            ML.Result resultEmpleado = BL.Empleado.GetById(IdEmpleado); //Datos del empleado seleccionado
-
-            //if(Session["objEmpleado"] == null)
-            //{
-            //    Session["objEmpleado"] = (ML.Empleado)resultEmpleado;
-            //}
+            ML.Result resultEmpleado = BL.Empleado.GetById(IdEmpleado); //Datos del empleado seleccionado (Boxing)
 
             ML.Empleado empleado = (ML.Empleado)resultEmpleado.Object; //Unboxing
 
-            //string SessionId = Convert.ToString(empleado.IdEmpleado); //Declaramos la sesión 
-            //string SessionName = empleado.Nombre;
-            //string SessionApellidoPaterno = empleado.ApellidoPaterno;
-            //string SessionApellidoMaterno = empleado.ApellidoMaterno;
-
-            //ML.Empleado empleadoItem = new ML.Empleado();
-
-            HttpContext.Session.SetInt32(SessionId, empleado.IdEmpleado); //Asignamos valores a la sesion
-            HttpContext.Session.SetString(SessionName, empleado.Nombre);
-            HttpContext.Session.SetString(SessionApellidoPaterno, empleado.ApellidoPaterno);
-            HttpContext.Session.SetString(SessionApellidoMaterno, empleado.ApellidoMaterno);
-
-
+            HttpContext.Session.SetInt32("SessionId", empleado.IdEmpleado); //Asignamos valores a la sesion
+            HttpContext.Session.SetString("SessionName", empleado.Nombre);
+            HttpContext.Session.SetString("SessionApellidoPaterno", empleado.ApellidoPaterno);
+            HttpContext.Session.SetString("SessionApellidoMaterno", empleado.ApellidoMaterno);
 
             if (resultDependientes.Correct)
             {
                 empleadoDependiente.Dependiente.Dependientes = new List<object>();
                 empleadoDependiente.Dependiente.Dependientes = resultDependientes.Objects;
 
-                //if(Session["objEmpleado"] != null)
-                //{
-                //    ML.Empleado empleado = (ML.Empleado)Session["objEmpleado"]; //Unboxing
-                //    empleadoDependiente.Empleado.IdEmpleado = empleado.IdEmpleado;
-                //    empleadoDependiente.Empleado.Nombre = empleado.Nombre;
-                //    empleadoDependiente.Empleado.ApellidoPaterno = empleado.ApellidoPaterno;
-                //    empleadoDependiente.Empleado.ApellidoMaterno = empleado.ApellidoMaterno;
-                //}
-
-                empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(SessionId)); //Guardamos los valores
-                empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString(SessionName);
-                empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString(SessionApellidoPaterno);
-                empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString(SessionApellidoMaterno);
+                empleadoDependiente.Empleado.IdEmpleado = empleado.IdEmpleado;
+                empleadoDependiente.Empleado.Nombre = empleado.Nombre;
+                empleadoDependiente.Empleado.ApellidoPaterno = empleado.ApellidoPaterno;
+                empleadoDependiente.Empleado.ApellidoMaterno = empleado.ApellidoMaterno;
             }
 
             return View(empleadoDependiente);
@@ -95,20 +66,12 @@ namespace PL.Controllers
 
             ML.Result result = BL.DependienteTipo.GetAll();
             empleadoDependiente.Dependiente.DependienteTipo.DependientesTipo = result.Objects;
+            empleadoDependiente.Empleado = new ML.Empleado();
 
-            //if (Session["objEmpleado"] != null)
-            //{
-            //    ML.Empleado empleado = (ML.Empleado)Session["objEmpleado"]; //Unboxing
-            //    empleadoDependiente.Empleado.IdEmpleado = empleado.IdEmpleado;
-            //    empleadoDependiente.Empleado.Nombre = empleado.Nombre;
-            //    empleadoDependiente.Empleado.ApellidoPaterno = empleado.ApellidoPaterno;
-            //    empleadoDependiente.Empleado.ApellidoMaterno = empleado.ApellidoMaterno;
-            //}
-
-            empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32(SessionId));
-            empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString(SessionName);
-            empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString(SessionApellidoPaterno);
-            empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString(SessionApellidoMaterno);
+            empleadoDependiente.Empleado.IdEmpleado = Convert.ToInt32(HttpContext.Session.GetInt32("SessionId")); //Obtenemos los valores
+            empleadoDependiente.Empleado.Nombre = HttpContext.Session.GetString("SessionName");
+            empleadoDependiente.Empleado.ApellidoPaterno = HttpContext.Session.GetString("SessionApellidoPaterno");
+            empleadoDependiente.Empleado.ApellidoMaterno = HttpContext.Session.GetString("SessionApellidoMaterno");
 
 
             return View(empleadoDependiente);

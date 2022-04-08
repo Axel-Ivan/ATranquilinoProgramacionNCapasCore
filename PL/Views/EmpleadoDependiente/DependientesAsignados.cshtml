@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http;
+
 <div class = "container">
     <div class = "row">
         <div class = "col-md-12">
@@ -35,7 +38,7 @@
         <div class = "row">
             <div class = "col-md-4">
                 @Html.LabelFor(model => model.Empleado.Nombre)
-                @Html.TextBoxFor(model => model.Empleado.Nombre, new { @class = "form-control", disabled = "true" }) 
+                @Html.TextBoxFor(model => model.Empleado.Nombre, new { @class = "form-control", disabled = "true", @id = "txt" }) 
             </div>
             <div class = "col-md-4">
                 @Html.LabelFor(model => model.Empleado.ApellidoPaterno)
@@ -43,7 +46,7 @@
             </div>
             <div class = "col-md-4">
                 @Html.LabelFor(model => model.Empleado.ApellidoPaterno)
-                @Html.TextBoxFor(model => model.Empleado.ApellidoPaterno, new { @class = "form-control", disabled = "true" }) 
+                @Html.TextBoxFor(model => model.Empleado.ApellidoMaterno, new { @class = "form-control", disabled = "true" }) 
             </div>
         </div>
         <br/>
