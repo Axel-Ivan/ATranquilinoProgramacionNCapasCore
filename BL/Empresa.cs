@@ -76,6 +76,15 @@ namespace BL
                 using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
                     var procedure = context.Database.ExecuteSqlRaw($"EmpresaDelete {IdEmpresa}");
+
+                    if(procedure >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
                 }
             }
             catch (Exception ex)

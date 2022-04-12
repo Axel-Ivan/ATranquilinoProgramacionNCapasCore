@@ -81,7 +81,30 @@ namespace PL.Controllers
             }
             else
             {
-                //Añadir el codigo faltante aqui
+                string rutaArchivo = HttpContext.Session.GetString("PathArchivo");
+                string connectionString = _configuration["ConnectionStringExcel:value"] + rutaArchivo;
+
+                ML.Result resultData = BL.Empresa.GetAllByExcel(connectionString);
+                if(resultData.Correct)
+                {
+                    ML.Result resultErrores = new ML.Result();
+                    resultErrores.Objects = new List<object>();
+
+                    foreach (ML.Empresa empresaItem in resultData.Objects)
+                    {
+                        ML.Result resultAdd = BL.Empresa.Add(empresaItem);
+                        if (!resultAdd.Correct)
+                        {
+                            resultErrores.Objects.Add("No se insertó la empresa con nombre: " + empresaItem.Nombre + ", telefono: " + empresaItem.Telefono + ", email: " +empresaItem.Email + ", direccion web: " + empresaItem.DireccionWeb);
+                        }
+                    }
+
+                    if(resultErrores.Objects.Count > 0)
+                    {
+                        string fileError = Path.Combine(_hostingEnvironment.ContentRootPath, @"~\Files\logErrores.txt");
+                        //Terminar el codigo del excel aqui
+                    }
+                }
             }
 
             return PartialView("ValidationModal");
