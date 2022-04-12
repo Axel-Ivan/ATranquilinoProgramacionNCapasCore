@@ -29,17 +29,14 @@
         </div>
         <div class = "row">
             <div class = "col-md-4">
-                @*@Html.Label(HttpContextAccessor.HttpContext.Session.GetString("SessionName"))*@
                 @Html.LabelFor(model => model.Empleado.Nombre)
                 @Html.TextBoxFor(model => model.Empleado.Nombre, new { @class = "form-control", disabled = "true" }) 
             </div>
             <div class = "col-md-4">
-                @*@Html.Label(HttpContextAccessor.HttpContext.Session.GetString("SessionApellidoPaterno"))*@
                 @Html.LabelFor(model => model.Empleado.ApellidoPaterno)
                 @Html.TextBoxFor(model => model.Empleado.ApellidoPaterno, HttpContextAccessor.HttpContext.Session.GetString("SessionApellidoPaterno"), new { @class = "form-control", disabled = "true" }) 
             </div>
             <div class = "col-md-4">
-                @*@Html.Label(HttpContextAccessor.HttpContext.Session.GetString("SessionApellidoMaterno"))*@
                 @Html.LabelFor(model => model.Empleado.ApellidoMaterno)
                 @Html.TextBoxFor(model => model.Empleado.ApellidoPaterno, HttpContextAccessor.HttpContext.Session.GetString("SessionApellidoMaterno"), new { @class = "form-control",disabled = "true" }) 
             </div>

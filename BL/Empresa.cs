@@ -243,6 +243,8 @@ namespace BL
                     error.Message = mensajeError;
                     result.Objects.Add(error);
                 }
+
+                contador++;
             }
 
             return result;

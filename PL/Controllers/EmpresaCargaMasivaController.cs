@@ -21,20 +21,13 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult CargaMasiva()
         {
-            ML.Result result = BL.Empresa.GetAll();
-            ML.Empresa empresa = new ML.Empresa();
+            ML.Result result = new ML.Result();
 
-            if(result.Correct)
-            {
-                empresa.Empresas = new List<object>();
-                empresa.Empresas = result.Objects;
-            }
-
-            return View(empresa);
+            return View(result);
         }
 
         [HttpPost]
-        public ActionResult CargaMasiva(ML.Empresa empresa)
+        public ActionResult CargaMasiva(ML.Result result)
         {
             IFormFile file = Request.Form.Files["ArchivoExcel"];
             string fileName = Path.GetFileName(file.FileName);
@@ -56,7 +49,7 @@ namespace PL.Controllers
                         {
                             using (FileStream stream = new FileStream(path, FileMode.CreateNew))
                             {
-                                file.CopyTo(stream); //Revisar
+                                file.CopyTo(stream); 
                             }
 
                             string connectionString = _configuration["ConnectionStringExcel:value"] + path;
@@ -68,18 +61,10 @@ namespace PL.Controllers
                                 if(resultValidacion.Objects.Count == 0)
                                 {
                                     resultValidacion.Correct = true;
+                                    HttpContext.Session.SetString("PathArchivo", path);
                                 }
-                                //else
-                                //{
-                                //    resultValidacion.Correct = false;
-                                //    ViewBag.Message = "";
-                                //}
-
-                                ML.Result result = BL.Empresa.GetAll();
-                                empresa.Empresas = new List<object>();
-                                empresa.Empresas = result.Objects;
-
-                                return View(empresa);
+                                
+                                return View(resultValidacion);
                             }
                             else
                             {
@@ -93,6 +78,10 @@ namespace PL.Controllers
                         ViewBag.Message = "El tipo de archivo es incorrecto, por favor verifique la extensión del archivo e intentelo de nuevo";
                     }
                 }
+            }
+            else
+            {
+                //Añadir el codigo faltante aqui
             }
 
             return PartialView("ValidationModal");

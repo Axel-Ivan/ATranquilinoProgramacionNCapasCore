@@ -1,4 +1,4 @@
-﻿@model ML.Empresa
+﻿@model ML.Result
 @{
     ViewData["Title"] = "CargaMasiva";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <h7 class="text-center">Suba un archivo de excel con el botón "Examinar" y después oprima "Cargar" para comenzar la carga masiva de su archivo</h7>
+            <h7 class="text-center">Presione el botón "Examinar" para subir un archivo de excel y después oprima "Cargar" para comenzar la carga masiva de su archivo</h7>
         </div>
     </div>
     <br/>
@@ -24,64 +24,49 @@
             <div class="row">
                 <div class = "col-md-4">
                     <input class="form-control" type="file" name="ArchivoExcel" onchange="readURL(this);" />
-                </div>        
-                <div class = "col-md-4">
-                    <input type="submit" value="Cargar" class="btn btn-primary" formmethod="post">
-                </div>
+                </div>  
+                
+                @if(!Model.Correct)
+                {
+                    <div class = "col-md-4">
+                        <input type="submit" value="Procesar" class="btn btn-primary" formmethod="post">
+                    </div>
+                }
+                else
+                {
+                    <div class = "col-md-4">
+                        <input type="submit" value="Cargar" class="btn btn-primary" formmethod="post">
+                    </div>
+                }               
             </div>
             <br />
         }
     </div>
 
-    @if(Model.Empresas.Count > 0)
-    {
-        <div class="row">
-            <div class="col-lg-12">
+    <div class = "row">
+        <div class = "col-md-12">
+            @if(Model.Objects != null)
+            {
                 <table class="table table-bordered table-responsive">
                     <thead>
-                        <tr class="text-center">
-                            <td class = "form-group" style = "display: none;">IdEmpresa</td>
-                            <td>Nombre</td>
-                            <td>Telefono</td>
-                            <td>Email</td>
-                            <td>Direccion Web</td>
-                            <td>Logo</td>
+                        <tr>
+                            <td>IdRegistro</td>
+                            <td>Error</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(ML.Empresa empresa in Model.Empresas)
+                        @foreach(ML.ErrorExcel error in Model.Objects)
                         {
-                            <tr class="text-center">
-                                <td class = "form-group" style = "display: none;">@empresa.IdEmpresa</td>                                
-                                <td>@empresa.Nombre</td>
-                                <td>@empresa.Telefono</td>
-                                <td>@empresa.Email</td>
-                                <td>@empresa.DireccionWeb</td>                               
-                                @if (empresa.Logo != null)
-                                {
-                                    <td><img src="data:image/jpeg;base64, @empresa.Logo" style=" height:100px; width: 100px;" /></td>
-                                }
-                                else
-                                {
-                                    <td><img src="~/img/NoImage.jpg" style=" height:80px; width:100px;" /></td>
-                                }
+                            <tr class = "text-center">
+                                <td>@error.IdErrorExcel</td>
+                                <td>@error.Message</td>
                             </tr>
                         }
                     </tbody>
-                </table>  
-            </div>
+                </table>
+            }
         </div>
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-danger" role="alert">
-                    No se encontraron registros de Empresas!!!
-                </div>
-            </div>
-        </div>
-    }
+    </div>
 
 </div>
 
