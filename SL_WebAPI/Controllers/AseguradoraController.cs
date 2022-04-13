@@ -57,8 +57,9 @@ namespace SL_WebAPI.Controllers
         }
 
         // PUT api/<AseguradoraController>/5
-        [HttpPut("{IdAseguradora}")]
-        public IActionResult Update(int IdAseguradora, [FromBody] ML.Aseguradora aseguradora)
+        //[HttpPut("{IdAseguradora}")]
+        [HttpPut]
+        public IActionResult Update([FromBody] ML.Aseguradora aseguradora)
         {
             ML.Result result = BL.Aseguradora.Update(aseguradora);
 

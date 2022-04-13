@@ -4,7 +4,7 @@
 
 namespace SL_WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmpresaController : ControllerBase
     {
@@ -57,8 +57,9 @@ namespace SL_WebAPI.Controllers
         }
 
         // PUT api/<EmpresaController>/5
-        [HttpPut("{IdEmpresa}")]
-        public IActionResult Update(int IdEmpresa, [FromBody] ML.Empresa empresa)
+        //[HttpPut("{IdEmpresa}")]
+        [HttpPut]
+        public IActionResult Update([FromBody] ML.Empresa empresa)
         {
             ML.Result result = BL.Empresa.Update(empresa);
 

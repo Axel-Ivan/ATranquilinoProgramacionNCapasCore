@@ -5,8 +5,7 @@ namespace PL.Controllers
 {
     public class AseguradoraController : Controller
     {
-
-        private IHostingEnvironment _hostingEnvironment;
+        private IHostingEnvironment _hostingEnvironment; //Dependencies Injection
         private IConfiguration _configuration;
         public AseguradoraController(IHostingEnvironment hostingEnvironment, IConfiguration configuration)
         {
@@ -110,7 +109,6 @@ namespace PL.Controllers
                 {
                     result.Correct = false;
                     result.ErrorMessage = ex.Message;
-
                 }
 
             if (result.Correct)
@@ -140,7 +138,7 @@ namespace PL.Controllers
                     aseguradora.Imagen = Convert.ToBase64String(imageArray);
                 }
 
-                if (aseguradora.IdAseguradora == 0) //Inicia Add 
+                if (aseguradora.IdAseguradora == null) //Inicia Add 
                 {
                     //result = BL.Aseguradora.Add(aseguradora);
 
@@ -180,7 +178,7 @@ namespace PL.Controllers
                         client.BaseAddress = new Uri(_configuration["WebAPI"]);
 
                         //HTTP POST
-                        var postTask = client.PutAsJsonAsync<ML.Aseguradora>("Aseguradora/Update/" + aseguradora.IdAseguradora, aseguradora);
+                        var postTask = client.PutAsJsonAsync<ML.Aseguradora>("Aseguradora/Update", aseguradora);
                         postTask.Wait();
 
                         var resultUpdate = postTask.Result;

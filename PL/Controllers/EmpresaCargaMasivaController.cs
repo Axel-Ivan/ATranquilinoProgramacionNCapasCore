@@ -28,13 +28,14 @@ namespace PL.Controllers
 
         [HttpPost]
         public ActionResult CargaMasiva(ML.Result result)
-        {
-            IFormFile file = Request.Form.Files["ArchivoExcel"];
-            string fileName = Path.GetFileName(file.FileName);
+        {           
             //string pathFolder = null;
 
             if(HttpContext.Session.GetString("PathArchivo") == null)
             {
+                IFormFile file = Request.Form.Files["ArchivoExcel"];
+                string fileName = Path.GetFileName(file.FileName);
+
                 if (file.Length > 0)
                 {
                     var folderPath = _configuration["PathFolder:value"];
@@ -102,7 +103,18 @@ namespace PL.Controllers
                     if(resultErrores.Objects.Count > 0)
                     {
                         string fileError = Path.Combine(_hostingEnvironment.ContentRootPath, @"~\Files\logErrores.txt");
-                        //Terminar el codigo del excel aqui
+                        using(StreamWriter writer = new StreamWriter(fileError))
+                        {
+                            foreach(string ln in resultErrores.Objects)
+                            {
+                                writer.WriteLine(ln);
+                            }
+                        }
+                        ViewBag.Message = "Las empresas no se ingresaron correctamente!!!";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Las empresas se agregaron correctamente!!!";
                     }
                 }
             }

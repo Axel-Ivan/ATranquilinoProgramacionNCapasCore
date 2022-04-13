@@ -29,7 +29,7 @@ namespace PL.Controllers
         {
             //ML.Empleado empleado = new ML.Empleado();
             ML.Result resultEmpresas = BL.Empresa.GetAll();
-            ML.Result resultEmpleados = BL.Empleado.GetByIdEmpresa(empleado.Empresa.IdEmpresa);
+            ML.Result resultEmpleados = BL.Empleado.GetByIdEmpresa(empleado.Empresa.IdEmpresa.Value);
             empleado.Empresa = new ML.Empresa();
 
             if (resultEmpleados.Correct)
