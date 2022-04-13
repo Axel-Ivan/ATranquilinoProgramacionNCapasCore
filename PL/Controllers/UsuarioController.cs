@@ -84,10 +84,10 @@ namespace PL.Controllers
 
                     direccion = ((ML.Direccion)result.Object);
 
-                    ML.Result resultDireccion = BL.Direccion.DireccionGetByIdColonia(direccion.Colonia.IdColonia);
-                    ML.Result resultColonia = BL.Colonia.ColoniaGetByIdMunicipio(direccion.Colonia.Municipio.IdMunicipio);
-                    ML.Result resultMunicipio = BL.Municipio.MunicipioGetByIdEstado(direccion.Colonia.Municipio.Estado.IdEstado);
-                    ML.Result resultEstado = BL.Estado.EstadoGetByIdPais(direccion.Colonia.Municipio.Estado.Pais.IdPais);
+                    ML.Result resultDireccion = BL.Direccion.DireccionGetByIdColonia(direccion.Colonia.IdColonia.Value);
+                    ML.Result resultColonia = BL.Colonia.ColoniaGetByIdMunicipio(direccion.Colonia.Municipio.IdMunicipio.Value);
+                    ML.Result resultMunicipio = BL.Municipio.MunicipioGetByIdEstado(direccion.Colonia.Municipio.Estado.IdEstado.Value);
+                    ML.Result resultEstado = BL.Estado.EstadoGetByIdPais(direccion.Colonia.Municipio.Estado.Pais.IdPais.Value);
 
                     direccion.Usuario.Rol.Roles = resultRol.Objects;
                     direccion.Colonia.Colonias = resultColonia.Objects;
@@ -180,9 +180,9 @@ namespace PL.Controllers
 
                 ML.Result resultPais = BL.Pais.GetAll();
                 ML.Result resultRol = BL.Rol.GetAll();
-                ML.Result resultColonia = BL.Colonia.ColoniaGetByIdMunicipio(direccion.Colonia.Municipio.IdMunicipio);
-                ML.Result resultMunicipio = BL.Municipio.MunicipioGetByIdEstado(direccion.Colonia.Municipio.Estado.IdEstado);
-                ML.Result resultEstado = BL.Estado.EstadoGetByIdPais(direccion.Colonia.Municipio.Estado.Pais.IdPais);
+                ML.Result resultColonia = BL.Colonia.ColoniaGetByIdMunicipio(direccion.Colonia.Municipio.IdMunicipio.Value);
+                ML.Result resultMunicipio = BL.Municipio.MunicipioGetByIdEstado(direccion.Colonia.Municipio.Estado.IdEstado.Value);
+                ML.Result resultEstado = BL.Estado.EstadoGetByIdPais(direccion.Colonia.Municipio.Estado.Pais.IdPais.Value);
 
                 direccion.Usuario.Rol.Roles = resultRol.Objects;
                 direccion.Colonia.Municipio.Estado.Pais.Paises = resultPais.Objects;
@@ -201,9 +201,9 @@ namespace PL.Controllers
             ML.Result resultAseguradora = BL.Usuario.GetAseguradoraByIdUsuario(IdUsuario);
 
             ML.Direccion direccionItem = (ML.Direccion)resultDireccion.Object;
-            ML.Result resultDeleteDireccion = BL.Direccion.Delete(direccionItem.IdDireccion);
+            ML.Result resultDeleteDireccion = BL.Direccion.Delete(direccionItem.IdDireccion.Value);
             ML.Aseguradora aseguradoraItem = (ML.Aseguradora)resultAseguradora.Object;
-            ML.Result resultDeleteAseguradora = BL.Aseguradora.Delete(aseguradoraItem.IdAseguradora);
+            ML.Result resultDeleteAseguradora = BL.Aseguradora.Delete(aseguradoraItem.IdAseguradora.Value);
 
             if (resultDeleteDireccion.Correct)
             {

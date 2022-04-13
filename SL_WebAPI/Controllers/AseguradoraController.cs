@@ -4,7 +4,7 @@
 
 namespace SL_WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AseguradoraController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace SL_WebAPI.Controllers
             }
         }
 
-        // GET api/<AseguradoraController>/5
+        // GET api/<AseguradoraController>/5       
         [HttpGet("{IdAseguradora}")]
         public IActionResult GetById(int IdAseguradora)
         {
