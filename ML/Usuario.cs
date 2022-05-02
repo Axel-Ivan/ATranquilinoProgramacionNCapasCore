@@ -57,5 +57,9 @@ namespace ML
         public ML.Direccion? Direccion { get; set; }
 
         public List<object>? Usuarios { get; set; }
+
+        public bool statusUsername { get; set; }
+
+        public bool statusContrasenia { get; set; }
     }
 }

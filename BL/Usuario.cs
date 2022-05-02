@@ -22,9 +22,6 @@ namespace BL
                 using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
                 {
 
-
-
-
                     //var procedure = context.Database.ExecuteSqlRaw($"UsuarioAdd '{usuario.UserName}', '{usuario.Contrasenia}', '{usuario.Nombre}', '{usuario.ApellidoPaterno}', '{usuario.ApellidoMaterno}', '{usuario.Email}', '{usuario.Sexo}', '{usuario.Telefono}', '{usuario.Celular}', '{usuario.FechaNacimiento}', '{usuario.Estatus}', '{usuario.CURP}', '{usuario.Imagen}', '{usuario.Rol.IdRol}', '{IdUsuario}'");
 
                     var parameters = new[] {
@@ -468,6 +465,51 @@ namespace BL
                     else
                     {
                         result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public static ML.Result GetByUsername(ML.Usuario usuario)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoProgramacionNCapasContext context = new DL.ATranquilinoProgramacionNCapasContext())
+                {
+                    var procedure = context.Usuarios.FromSqlRaw($"GetByUsername '{usuario.UserName}'").AsEnumerable().FirstOrDefault();
+                    result.Objects = new List<object>();
+
+                    if (procedure != null)
+                    {
+                        ML.Usuario usuarioItem = new ML.Usuario();
+                        usuarioItem.IdUsuario = procedure.IdUsuario;
+                        usuarioItem.UserName = procedure.UserName;
+                        usuarioItem.Contrasenia = procedure.Contrasenia;
+                        usuarioItem.Nombre = procedure.Nombre;
+                        usuarioItem.ApellidoPaterno = procedure.ApellidoPaterno;
+                        usuarioItem.ApellidoMaterno = procedure.ApellidoMaterno;
+                        usuarioItem.Email = procedure.Email;
+                        usuarioItem.Sexo = procedure.Sexo;
+                        usuarioItem.Telefono = procedure.Telefono;
+                        usuarioItem.Celular = procedure.Celular;
+                        usuarioItem.FechaNacimiento = Convert.ToString(procedure.FechaNacimiento);
+                        usuarioItem.Estatus = Convert.ToByte(procedure.Estatus);
+                        usuario.CURP = procedure.Curp;
+                        usuario.Imagen = procedure.Imagen;
+                        usuario.Rol = new ML.Rol();
+                        usuario.Rol.IdRol = procedure.IdRol;
+
+                        result.Object = usuarioItem;
+                        result.Correct = true;
                     }
                 }
             }
